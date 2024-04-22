@@ -1,0 +1,43 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1.5rem;
+}
+
+.loginLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+    row-gap: 0.5rem;
+}
+
+.loginInput {
+    width: 100%;
+    padding: 8px 60px 8px 8px;
+}
+
+.passwordContainer {
+    position: relative;
+    width: 100%;
+}
+
+.toggleButton {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: auto;
+    height: fit-content;
+}
+
+.message {}
+
+.loginButton {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    color: var(--primary);
+    cursor: pointer;
+}

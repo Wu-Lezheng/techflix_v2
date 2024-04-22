@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String  @id @default(cuid())
+  username   String  @unique
+  email      String  @unique
+  password   String
+  profilePic String  @default("/images/default-profile-image.jpg")
+  isAdmin    Boolean @default(false)
+
+  recentlyViewed ProductView[]
+  favourites     UserFavourites[]
+
+  @@map(name: "users")
+}
+
+model Category {
+  id                  String  @id @default(cuid())
+  categoryName        String  @unique
+  categoryDescription String
+  labelColor          String  @unique
+  parentCategoryId    String?
+
+  parentCategory  Category?  @relation("ParentChildren", fields: [parentCategoryId], references: [id])
+  childCategories Category[] @relation("ParentChildren")
+  products        Product[]
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  productName    String
+  productSummary String
+  numberOfViews  Int      @default(0)
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+  updatedAt      DateTime @updatedAt @map(name: "updated_at")
+  coverImage     String
+  categoryId     String
+
+  category       Category         @relation(fields: [categoryId], references: [id])
+  gallery        MediaFile[]
+  tags           ProductTag[]
+  keywords       Keyword[]
+  specifications Specification[]
+  features       Feature[]
+  viewedBy       ProductView[]
+  favouritedBy   UserFavourites[]
+}
+
+model ProductView {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  viewedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model UserFavourites {
+  userId    String
+  productId String
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([userId, productId])
+}
+
+enum FileType {
+  IMAGE
+  VIDEO
+}
+
+model MediaFile {
+  id        String   @id @default(cuid())
+  fileName  String
+  filePath  String   @unique
+  fileType  FileType
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Tag {
+  id       String       @id @default(cuid())
+  tagName  String       @unique
+  products ProductTag[]
+}
+
+model ProductTag {
+  productId String
+  tagId     String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
+}
+
+model Keyword {
+  value     String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([value, productId])
+}
+
+enum SpecType {
+  OS
+  SUPPORTED_LANGUAGE
+  HARDWARE_REQUIREMENTS
+  SOFTWARE_DEPENDENCIES
+  NETWORK_REQUIREMENTS
+  DEPLOYMENT_ENVIRONMENT
+}
+
+model Specification {
+  id        String   @id @default(cuid())
+  specType  SpecType
+  value     String
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Feature {
+  id                 String        @id @default(cuid())
+  featureTitle       String
+  featureDescription String
+  featureImage       String?
+  layout             FeatureLayout
+  productId          String
+  product            Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+enum FeatureLayout {
+  SPLIT
+  STACK
+  IMAGE_SPLIT
+  IMAGE_STACK
+}

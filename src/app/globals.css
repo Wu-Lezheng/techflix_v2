@@ -1,0 +1,52 @@
+:root {
+  --bg: rgb(36, 37, 41);
+  --bg-t: rgba(87, 90, 98, 0.7);
+
+  --ml-sidebar: 320px;
+  --mr-sidebar: 70px;
+  --mt-topbar: 100px;
+
+  --accent: #DB0101;
+  --primary: #fffff0;
+  --secondary: #CDCDC0;
+
+  --button-inactive: hsl(60, 100%, 97%, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+ul,
+ol,
+li,
+div {
+  margin: 0;
+  padding: 0;
+  color: var(--primary);
+}
+
+button {
+  border: none;
+  background-color: var(--accent);
+  color: var(--primary);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.gradientDivider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, var(--button-inactive), var(--subdued-text), var(--button-inactive));
+}
