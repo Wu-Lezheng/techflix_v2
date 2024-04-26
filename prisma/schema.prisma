@@ -79,18 +79,12 @@ model UserFavourites {
   @@id([userId, productId])
 }
 
-enum FileType {
-  IMAGE
-  VIDEO
-}
-
 model MediaFile {
-  id        String   @id @default(cuid())
+  id        String  @id @default(cuid())
   fileName  String
-  filePath  String   @unique
-  fileType  FileType
+  filePath  String  @unique
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
 
 model Tag {

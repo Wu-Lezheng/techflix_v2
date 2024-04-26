@@ -2,15 +2,25 @@
   --bg: rgb(36, 37, 41);
   --bg-t: rgba(87, 90, 98, 0.7);
 
-  --ml-sidebar: 320px;
-  --mr-sidebar: 70px;
+  --margin: 50px;
+  --ml-sidebar: 300px;
+  --mr-sidebar: 50px;
   --mt-topbar: 100px;
 
-  --accent: #DB0101;
   --primary: #fffff0;
   --secondary: #CDCDC0;
+  --accent: #DB0101;
+  --accent-hover: #FF2727;
+  --accent-click: #C00101;
 
-  --button-inactive: hsl(60, 100%, 97%, 0.2);
+  --button-secondary: hsla(60, 100%, 97%, 0.2);
+  --button-secondary-hover: hsla(60, 100%, 97%, 0.3);
+  --button-secondary-click: hsla(60, 5%, 57%, 0.3);
+
+  --medium: 500;
+  --semi-bold: 600;
+  --bold: 700;
+
 }
 
 * {
@@ -36,17 +46,22 @@ div {
 
 button {
   border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
   background-color: var(--accent);
   color: var(--primary);
+  cursor: pointer;
+  font-weight: var(--medium);
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
+  position: relative;
 }
 
 .gradientDivider {
   border: none;
   height: 1px;
-  background: linear-gradient(to right, var(--button-inactive), var(--subdued-text), var(--button-inactive));
+  background: linear-gradient(to right, var(--button-secondary), var(--primary), var(--button-secondary));
 }

@@ -1,0 +1,103 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.25rem;
+    margin-left: var(--ml-sidebar);
+    margin-right: var(--mr-sidebar);
+    margin-top: var(--mt-topbar);
+    transition: margin-left 0.25s ease;
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        margin-left: var(--margin);
+    }
+}
+
+/*for the summary sections*/
+.summary {
+    display: flex;
+    flex-direction: row;
+    column-gap: 4rem;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.info {
+    width: 60%;
+    transition: width 0.25s ease;
+}
+
+.info .description {
+    color: var(--secondary);
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .summary {
+        flex-direction: column;
+        row-gap: 4rem;
+        align-items: flex-start;
+    }
+
+    .info {
+        width: 100%;
+    }
+}
+
+.databoxes {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2.75rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.databoxes .dataValue {
+    color: var(--accent);
+    font-size: 1.75rem;
+}
+
+.databoxes .dataName {
+    font-weight: var(--semi-bold);
+    font-size: 1.125rem;
+}
+
+.editButton {
+    font-size: 1.125rem;
+    padding: 0.875rem 2rem;
+    margin-left: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--button-secondary);
+}
+
+/*for the sort sections*/
+.sortSection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 4rem;
+    align-items: center;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+}
+
+.sortButton {
+    background-color: var(--button-secondary);
+    color: var(--secondary);
+}
+
+.editButton:hover,
+.sortButton:hover {
+    background-color: var(--button-secondary-hover);
+}
+
+.editButton:active,
+.sortButton:active {
+    background-color: var(--button-secondary-click);
+    color: var(--primary);
+}
