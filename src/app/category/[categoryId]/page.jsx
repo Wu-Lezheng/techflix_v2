@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import ProductCard from "@/components/product-display/product-card/ProductCard";
-import { getUserRole } from "@/lib/helper/userHelper";
+import { isAdmin } from "@/lib/helper/userHelper";
 import { redirect } from "next/navigation";
 import styles from "./page.module.css";
 
@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }) {
                         <h2 className={styles.dataValue}>{products.reduce((total, product) => total + product.numberOfViews, 0)}</h2>
                         <p className={styles.dataName}>Views</p>
                     </div>
-                    {getUserRole() && (<button className={styles.editButton}>Edit</button>)}
+                    {isAdmin() && (<button className={styles.editButton}>Edit</button>)}
                 </div>
             </div>
 
@@ -63,11 +63,11 @@ export default async function CategoryPage({ params }) {
                 </div>
             </div>
 
-            <div>
+            <div className={styles.productCards}>
                 {
                     Array.isArray(products) && products.length !== 0
                         ? products.map(product => (
-                            <ProductCard key={product.id} product={product} />
+                            <ProductCard product={product} />
                         ))
                         : (<p>No products found</p>)
                 }

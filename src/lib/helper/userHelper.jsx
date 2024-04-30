@@ -6,7 +6,7 @@ let currentUser = {
     isAdmin: true,
 }
 
-export function getUserRole() {
+export function isAdmin() {
     return currentUser.isAdmin;
 }
 

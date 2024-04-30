@@ -37,7 +37,7 @@
 @media screen and (max-width: 768px) {
     .summary {
         flex-direction: column;
-        row-gap: 4rem;
+        row-gap: 1rem;
         align-items: flex-start;
     }
 
@@ -78,6 +78,7 @@
     flex-direction: row;
     column-gap: 4rem;
     align-items: center;
+    white-space: nowrap;
 }
 
 .buttonGroup {
@@ -89,6 +90,7 @@
 .sortButton {
     background-color: var(--button-secondary);
     color: var(--secondary);
+
 }
 
 .editButton:hover,
@@ -100,4 +102,14 @@
 .sortButton:active {
     background-color: var(--button-secondary-click);
     color: var(--primary);
+}
+
+/*for the products sections*/
+.productCards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 1rem;
+    row-gap: 2.5rem;
 }

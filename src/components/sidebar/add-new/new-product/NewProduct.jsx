@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import formatFileSize from '@/lib/helper/formatter';
+import { formatFileSize } from '@/lib/helper/formatter';
 import styles from "./NewProduct.module.css"
 
 export default function NewProduct() {

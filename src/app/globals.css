@@ -1,6 +1,7 @@
 :root {
   --bg: rgb(36, 37, 41);
   --bg-t: rgba(87, 90, 98, 0.7);
+  --bg-dark: rgb(0, 0, 0, 0.6);
 
   --margin: 50px;
   --ml-sidebar: 300px;
@@ -20,6 +21,11 @@
   --medium: 500;
   --semi-bold: 600;
   --bold: 700;
+
+  --mobile-screen: 320px;
+  --small-screen: 768px;
+  --medium-screen: 1024px;
+  --large-screen: 1280px;
 
 }
 
