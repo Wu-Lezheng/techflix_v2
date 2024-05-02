@@ -65,9 +65,9 @@ export default async function CategoryPage({ params }) {
 
             <div className={styles.productCards}>
                 {
-                    Array.isArray(products) && products.length !== 0
+                    Array.isArray(products) && products.length > 0
                         ? products.map(product => (
-                            <ProductCard product={product} />
+                            <ProductCard product={product} key={product.id} />
                         ))
                         : (<p>No products found</p>)
                 }

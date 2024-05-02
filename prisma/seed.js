@@ -8,6 +8,7 @@ async function main() {
         where: { email: 'alice@prisma.io' },
         update: {},
         create: {
+            id: 'clvp8f1kv0000ooixz3hx0q12',
             username: 'alice',
             email: 'alice@prisma.io',
             password: 'password123',
@@ -26,6 +27,12 @@ async function main() {
     });
 
     const categories = [
+        {
+            categoryName: 'Others',
+            categoryDescription: 'This category stores all Research & Development (R&D) projects and miscellaneous products. Products without a properly assigned category will also be relocated here.',
+            labelColor: "#CDCDC0",
+            parentCategoryId: null,
+        },
         {
             categoryName: 'Surveillance',
             categoryDescription: 'This category encompasses technologies and systems designed to observe, record, and analyse activities and events for security and safety purposes.',
@@ -83,19 +90,51 @@ async function main() {
         {
             productName: 'Firefighter ERS',
             productSummary: 'Firefighter Emergency Response System (ERS) is a comprehensive framework designed to facilitate rapid and effective emergency responses to various incidents, including fires, accidents, and other emergencies.',
+            numberOfViews: 143,
             coverImage: '/cover-images/firefighter_ers.jpg',
             categoryId: ersCategory.id,
         },
         {
             productName: 'Agile Ops',
             productSummary: 'Agile Ops is a comprehensive platform designed to streamline reporting and deployment processes, ensuring efficient resource management and rapid response to emergency incidents. With its intuitive interface and powerful features, our software empowers SCDF personnel to effectively coordinate operations, generate insightful reports, and deploy resources with precision and speed.',
+            numberOfViews: 9375,
             coverImage: '/cover-images/agile_ops.jpg',
             categoryId: ersCategory.id,
         },
+        {
+            productName: "Mongolian Police E-Staging",
+            productSummary: "Mongolian Police E-Staging is a robust Android application designed to modernize and enhance the operational efficiency of the Mongolian police force. With its user-friendly interface and powerful features, our app enables police personnel to effectively manage operations, generate detailed reports, and respond swiftly to incidents. It's an essential tool for resource management and emergency response coordination in the digital age.",
+            coverImage: "/cover-images/e_staging.png",
+            categoryId: ersCategory.id,
+        }
     ];
 
     const createdProducts = await Promise.all(
         products.map(product => prisma.product.create({ data: product }))
+    );
+
+    // create recently viewed
+    const droneSurveillance = createdProducts.find(product => product.productName === 'Drone Surveillance');
+    const agileOps = createdProducts.find(product => product.productName === 'Agile Ops');
+    const firefighterERS = createdProducts.find(product => product.productName === 'Firefighter ERS');
+
+    const viewedProducts = [
+        {
+            userId: alice.id,
+            productId: droneSurveillance.id,
+        },
+        {
+            userId: alice.id,
+            productId: agileOps.id,
+        },
+        {
+            userId: alice.id,
+            productId: firefighterERS.id,
+        },
+    ];
+
+    const recentlyViewed = await Promise.all(
+        viewedProducts.map(viewedProduct => prisma.productViewed.create({ data: viewedProduct }))
     );
 }
 

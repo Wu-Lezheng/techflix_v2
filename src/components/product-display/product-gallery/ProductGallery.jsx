@@ -14,6 +14,8 @@ export default function ProductGallery({ products, count }) {
         return null;
     }
 
+    // TODO: sort the products based on certain criteria
+
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
@@ -23,12 +25,15 @@ export default function ProductGallery({ products, count }) {
     const handlePrev = () => {
         setCurrentIndex((currentIndex - 1 + count) % count);
     };
+    const goToIndex = (index) => {
+        setCurrentIndex(index);
+    };
 
     return (
         <div className={styles.galleryContainer}>
 
             <div className={styles.imageContainer}>
-                <motion.div key={currentIndex} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} exit={{ opacity: 0.5 }} transition={{ duration: 0.5, ease: "easeInOut" }}>
+                <motion.div key={currentIndex} className={styles.imageContainer} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} exit={{ opacity: 0.5 }} transition={{ duration: 0.5, ease: "easeInOut" }}>
                     <Image src={products[currentIndex].coverImage} alt={products[currentIndex].productName} fill sizes='99vw' quality={100} priority className={styles.productImage}></Image>
                 </motion.div>
                 <div className={styles.navContainer}>
@@ -49,6 +54,7 @@ export default function ProductGallery({ products, count }) {
                         initial={{ backgroundColor: 'var(--primary)' }}
                         animate={{ backgroundColor: index === currentIndex ? 'var(--accent)' : 'var(--primary)' }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
+                        onClick={() => goToIndex(index)}
                     ></motion.div>
                 ))}
             </div>

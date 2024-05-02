@@ -21,7 +21,7 @@ model User {
   profilePic String  @default("/images/default-profile-image.jpg")
   isAdmin    Boolean @default(false)
 
-  recentlyViewed ProductView[]
+  recentlyViewed ProductViewed[]
   favourites     UserFavourites[]
 
   @@map(name: "users")
@@ -55,19 +55,18 @@ model Product {
   keywords       Keyword[]
   specifications Specification[]
   features       Feature[]
-  viewedBy       ProductView[]
+  viewedBy       ProductViewed[]
   favouritedBy   UserFavourites[]
 }
 
-model ProductView {
-  id        String   @id @default(cuid())
+model ProductViewed {
   userId    String
   productId String
   viewedAt  DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
 
-  @@unique([userId, productId])
+  @@id([userId, productId])
 }
 
 model UserFavourites {

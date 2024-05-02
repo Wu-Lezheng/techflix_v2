@@ -1,0 +1,19 @@
+.productContainer {
+    width: 100%;
+    background-color: var(--bg-t);
+    border: none;
+    border-radius: 0.875rem;
+    padding: 1rem;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.thumbnail {
+    object-fit: cover;
+    border: none;
+    border-radius: 0.625rem;
+}
