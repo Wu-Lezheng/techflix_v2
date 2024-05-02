@@ -1,12 +1,13 @@
 :root {
   --bg: rgb(36, 37, 41);
-  --bg-t: rgba(87, 90, 98, 0.7);
+  --bg-t: rgba(74, 74, 74, 0.35);
   --bg-dark: rgb(0, 0, 0, 0.6);
 
-  --margin: 50px;
-  --ml-sidebar: 300px;
-  --mr-sidebar: 50px;
-  --mt-topbar: 100px;
+  --margin: 3.5rem;
+  --sidebar-width: 15.5rem;
+  --ml-sidebar: calc(var(--margin) + var(--sidebar-width));
+  --mr-sidebar: var(--margin);
+  --mt-topbar: 6.25rem;
 
   --primary: #fffff0;
   --secondary: #CDCDC0;
@@ -26,6 +27,7 @@
   --small-screen: 768px;
   --medium-screen: 1024px;
   --large-screen: 1280px;
+  --extra-large-screen: 1920px;
 
 }
 
@@ -50,6 +52,26 @@ div {
   color: var(--primary);
 }
 
+html {
+  margin: 0;
+  padding: 0;
+  transition: font-size 0.25s ease;
+}
+
+@media screen and (min-width: 1920px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
 button {
   border: none;
   border-radius: 0.25rem;
@@ -60,10 +82,27 @@ button {
   font-weight: var(--medium);
 }
 
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  position: relative;
+/* global classes */
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.25rem;
+  margin-left: var(--ml-sidebar);
+  margin-right: var(--mr-sidebar);
+  margin-top: var(--mt-topbar);
+  transition: margin-left 0.25s ease;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    margin-left: var(--margin);
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  :root {
+    --margin: 6rem;
+  }
 }
 
 .gradientDivider {

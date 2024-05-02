@@ -1,11 +1,23 @@
+import prisma from "@/lib/prisma";
 import { Suspense } from 'react'
+import ProductGallery from "@/components/product-display/product-gallery/ProductGallery";
 import Sidebar from '@/components/sidebar/Sidebar';
 import styles from "./page.module.css"
 
-export default function Home() {
+async function getAllProducts() {
+
+    const products = await prisma.product.findMany();
+
+    return products;
+}
+
+export default async function Home() {
+
+    const products = await getAllProducts();
 
     return (
-        <div>
+        <div className="container">
+            <ProductGallery products={products} count={3} />
             <Sidebar></Sidebar>
             <Suspense fallback={<p>Loading video...</p>}>
                 <VideoComponent fileName="my-video.mp4" />

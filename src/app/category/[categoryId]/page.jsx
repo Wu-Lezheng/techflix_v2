@@ -33,7 +33,7 @@ export default async function CategoryPage({ params }) {
     const products = await getProducts(categoryId);
 
     return (
-        <div className={styles.container}>
+        <div className="container">
             <div className={styles.summary}>
                 <div className={styles.info}>
                     <h1>{category.categoryName}</h1>
