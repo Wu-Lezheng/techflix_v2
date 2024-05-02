@@ -63,7 +63,6 @@
     background-color: var(--secondary);
     border: none;
     border-radius: 0.25rem;
-    transition: background-color 0.25s ease;
     transition: width 0.25s ease;
     transition: height 0.25s ease;
 }
