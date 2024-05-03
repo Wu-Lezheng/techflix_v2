@@ -17,3 +17,21 @@
     border: none;
     border-radius: 0.625rem;
 }
+
+.productName {
+    margin-top: 1.125rem;
+    font-size: 1.125rem;
+    font-weight: var(--semi-bold);
+}
+
+.categorySection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.productCategory {
+    color: var(--secondary);
+}

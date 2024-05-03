@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "FileType" AS ENUM ('IMAGE', 'VIDEO');
-
--- CreateEnum
 CREATE TYPE "SpecType" AS ENUM ('OS', 'SUPPORTED_LANGUAGE', 'HARDWARE_REQUIREMENTS', 'SOFTWARE_DEPENDENCIES', 'NETWORK_REQUIREMENTS', 'DEPLOYMENT_ENVIRONMENT');
 
 -- CreateEnum
@@ -45,19 +42,19 @@ CREATE TABLE "Product" (
 );
 
 -- CreateTable
-CREATE TABLE "ProductView" (
-    "id" TEXT NOT NULL,
+CREATE TABLE "ProductViewed" (
     "userId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "viewedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "ProductView_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ProductViewed_pkey" PRIMARY KEY ("userId","productId")
 );
 
 -- CreateTable
 CREATE TABLE "UserFavourites" (
     "userId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
+    "addedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "UserFavourites_pkey" PRIMARY KEY ("userId","productId")
 );
@@ -67,7 +64,6 @@ CREATE TABLE "MediaFile" (
     "id" TEXT NOT NULL,
     "fileName" TEXT NOT NULL,
     "filePath" TEXT NOT NULL,
-    "fileType" "FileType" NOT NULL,
     "productId" TEXT NOT NULL,
 
     CONSTRAINT "MediaFile_pkey" PRIMARY KEY ("id")
@@ -132,9 +128,6 @@ CREATE UNIQUE INDEX "Category_categoryName_key" ON "Category"("categoryName");
 CREATE UNIQUE INDEX "Category_labelColor_key" ON "Category"("labelColor");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ProductView_userId_productId_key" ON "ProductView"("userId", "productId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "MediaFile_filePath_key" ON "MediaFile"("filePath");
 
 -- CreateIndex
@@ -147,10 +140,10 @@ ALTER TABLE "Category" ADD CONSTRAINT "Category_parentCategoryId_fkey" FOREIGN K
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ProductView" ADD CONSTRAINT "ProductView_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProductViewed" ADD CONSTRAINT "ProductViewed_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ProductView" ADD CONSTRAINT "ProductView_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProductViewed" ADD CONSTRAINT "ProductViewed_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserFavourites" ADD CONSTRAINT "UserFavourites_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -72,8 +72,9 @@ model ProductViewed {
 model UserFavourites {
   userId    String
   productId String
-  user      User    @relation(fields: [userId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+  addedAt   DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 
   @@id([userId, productId])
 }

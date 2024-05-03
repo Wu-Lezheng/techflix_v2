@@ -90,16 +90,7 @@
 
 /*for the products sections*/
 .productCards {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    column-gap: 2rem;
-    row-gap: 2.5rem;
-}
-
-@media screen and (min-width: 1280px) {
-    .productCards {
-        column-gap: 3rem;
-    }
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr));
+    gap: 2.5rem 2rem;
 }

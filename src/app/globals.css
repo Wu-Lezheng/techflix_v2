@@ -86,7 +86,7 @@ button {
 .container {
   display: flex;
   flex-direction: column;
-  row-gap: 2.25rem;
+  row-gap: 2.5rem;
   margin-left: var(--ml-sidebar);
   margin-right: var(--mr-sidebar);
   margin-top: var(--mt-topbar);

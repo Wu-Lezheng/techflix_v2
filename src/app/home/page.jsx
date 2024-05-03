@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma";
-import { Suspense } from 'react'
+import { Suspense } from 'react';
 import { getUserId } from "@/lib/helper/userHelper";
 import ProductGallery from "@/components/product-display/product-gallery/ProductGallery";
-import ProductCardBg from "@/components/product-display/product-card-bg/ProductCardBg";
+import RecentlyViewed from "@/components/recently-viewed/RecentlyViewed";
 import Sidebar from '@/components/sidebar/Sidebar';
 import styles from "./page.module.css"
 
@@ -39,23 +39,9 @@ export default async function Home() {
     const recentlyViewed = await getRecentlyViewed(getUserId());
 
     return (
-        <div className="container">
+        <div className="container" style={{ rowGap: '3rem' }}>
             <ProductGallery products={products} count={3} />
-
-            {/* recently viewed */}
-            <div>
-                <h1>Recently Viewed</h1>
-                <div className={styles.recentProducts}>
-                    {Array.isArray(recentlyViewed) && recentlyViewed.length > 0
-                        ? recentlyViewed.map(product => (
-                            <ProductCardBg product={product} />
-                        ))
-                        // TODO: edit 404
-                        : <p>No recently viewed</p>
-                    }
-                </div>
-            </div>
-
+            <RecentlyViewed products={recentlyViewed} count={3} />
             <Sidebar></Sidebar>
             <Suspense fallback={<p>Loading video...</p>}>
                 <VideoComponent fileName="my-video.mp4" />
