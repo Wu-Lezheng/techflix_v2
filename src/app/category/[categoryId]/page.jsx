@@ -48,7 +48,9 @@ export default async function CategoryPage({ params }) {
                         <h2 className={styles.dataValue}>{products.reduce((total, product) => total + product.numberOfViews, 0)}</h2>
                         <p className={styles.dataName}>Views</p>
                     </div>
-                    {isAdmin() && (<button className={styles.editButton}>Edit</button>)}
+                    {
+                        await isAdmin() && (<button className={styles.editButton}>Edit</button>)
+                    }
                 </div>
             </div>
 

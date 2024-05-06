@@ -3,7 +3,7 @@ import styles from "./RecentlyViewed.module.css";
 
 export default function RecentlyViewed({ products, count }) {
 
-    if (count < products.length) {
+    if (products && count < products.length) {
         products = products.slice(0, count);
     }
 

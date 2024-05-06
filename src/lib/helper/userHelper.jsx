@@ -1,18 +1,28 @@
-// TODO: implement user auth and user info retrieval, since this is a hard-coded solution
-let currentUser = {
-    id: 'clvp8f1kv0000ooixz3hx0q12',
-    username: 'alice',
-    email: 'alice@prisma.io',
-    password: 'password123',
-    isAdmin: true,
+import prisma from "../prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+// TODO: consider setting the user globally for better performance but this is not secure
+let currentUser;
+
+export async function isAdmin() {
+    const session = await getServerSession(authOptions);
+    if (session && session.user) {
+        const userId = session.user.id;
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+        })
+        return user.isAdmin;
+    }
+    return false;;
 }
 
-export function isAdmin() {
-    return currentUser.isAdmin;
-}
-
-export function getUserId() {
-    return currentUser.id;
+export async function getUserId() {
+    const session = await getServerSession(authOptions);
+    if (session && session.user) {
+        return session.user.id;
+    }
+    return "";
 }
 
 export function setUser(user) {

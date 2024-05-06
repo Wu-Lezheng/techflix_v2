@@ -13,7 +13,11 @@ export default async function Landing() {
         <button>
           <Link href="/login">Get Started</Link>
         </button>
-        <pre>{JSON.stringify(session)}</pre>
+        {
+          session
+            ? (<p>{session.user.id}</p>)
+            : (<p>You are not signed in</p>)
+        }
       </div>
     </main>
   );

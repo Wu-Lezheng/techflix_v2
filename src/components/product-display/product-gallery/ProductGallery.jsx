@@ -9,6 +9,13 @@ import styles from "./ProductGallery.module.css";
 
 export default function ProductGallery({ products, count }) {
 
+    // TODO: edit not-found element
+    if (!products) {
+        return (
+            <p>No featured products</p>
+        );
+    }
+
     if (count > products.length) {
         console.error('Count should not be greater than the products array length.');
         return null;

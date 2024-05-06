@@ -14,6 +14,11 @@ async function getAllProducts() {
 }
 
 async function getRecentlyViewed(userId) {
+
+    if (userId.trim().length === 0) {
+        return null;
+    }
+
     const recentViews = await prisma.productViewed.findMany({
         where: { userId: userId },
         orderBy: {
@@ -36,7 +41,8 @@ async function getRecentlyViewed(userId) {
 export default async function Home() {
 
     const products = await getAllProducts();
-    const recentlyViewed = await getRecentlyViewed(getUserId());
+    const userId = await getUserId();
+    const recentlyViewed = await getRecentlyViewed(userId);
 
     return (
         <div className="container" style={{ rowGap: '3rem' }}>
