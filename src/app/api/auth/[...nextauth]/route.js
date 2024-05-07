@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
-import { compare } from "bcrypt";
 import { createId } from "@paralleldrive/cuid2";
-import NextAuth from "next-auth"
+import { compare } from "bcrypt";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
@@ -72,4 +72,5 @@ export const authOptions = {
 }
 
 const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
+

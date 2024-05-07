@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useState } from 'react';
 
-import { AiOutlineLeft } from "react-icons/ai";
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import styles from "./ProductGallery.module.css";
 
 export default function ProductGallery({ products, count }) {
@@ -17,8 +16,7 @@ export default function ProductGallery({ products, count }) {
     }
 
     if (count > products.length) {
-        console.error('Count should not be greater than the products array length.');
-        return null;
+        count = products.length;
     }
 
     // TODO: sort the products based on certain criteria

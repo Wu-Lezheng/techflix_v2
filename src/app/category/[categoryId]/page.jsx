@@ -1,6 +1,7 @@
-import prisma from "@/lib/prisma";
 import ProductCard from "@/components/product-display/product-card/ProductCard";
+import Topbar from "@/components/topbar/Topbar";
 import { isAdmin } from "@/lib/helper/userHelper";
+import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import styles from "./page.module.css";
 
@@ -34,6 +35,7 @@ export default async function CategoryPage({ params }) {
 
     return (
         <div className="container">
+            <Topbar></Topbar>
             <div className={styles.summary}>
                 <div className={styles.info}>
                     <h1>{category.categoryName}</h1>

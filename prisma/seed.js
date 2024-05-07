@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
 
     const password1 = await hash("Password123", 12);
-    const password2 = await hash("123456", 12);
+    const password2 = await hash("Password123", 12);
 
     // create the users
     const alice = await prisma.user.upsert({
@@ -17,6 +17,7 @@ async function main() {
             username: 'alice',
             email: 'alice@prisma.io',
             password: password1,
+            profilePic: '/profile-images/alice_profile_image.png',
             isAdmin: true,
         },
     });

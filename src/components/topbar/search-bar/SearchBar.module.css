@@ -1,0 +1,24 @@
+.searchBar {
+    height: 100%;
+}
+
+.searchContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.searchInput {
+    height: 100%;
+    padding-left: 2.5rem;
+    background-color: var(--element-active);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.searchIcon {
+    color: var(--primary);
+    position: absolute;
+    left: 0.5rem;
+}

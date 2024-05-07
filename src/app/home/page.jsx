@@ -1,10 +1,10 @@
-import prisma from "@/lib/prisma";
-import { Suspense } from 'react';
-import { getUserId } from "@/lib/helper/userHelper";
 import ProductGallery from "@/components/product-display/product-gallery/ProductGallery";
 import RecentlyViewed from "@/components/recently-viewed/RecentlyViewed";
 import Sidebar from '@/components/sidebar/Sidebar';
-import styles from "./page.module.css"
+import Topbar from "@/components/topbar/Topbar";
+import { getUserId } from "@/lib/helper/userHelper";
+import prisma from "@/lib/prisma";
+import { Suspense } from 'react';
 
 async function getAllProducts() {
 
@@ -15,7 +15,7 @@ async function getAllProducts() {
 
 async function getRecentlyViewed(userId) {
 
-    if (userId.trim().length === 0) {
+    if (!userId || userId.trim().length === 0) {
         return null;
     }
 
@@ -46,6 +46,7 @@ export default async function Home() {
 
     return (
         <div className="container" style={{ rowGap: '3rem' }}>
+            <Topbar></Topbar>
             <ProductGallery products={products} count={3} />
             <RecentlyViewed products={recentlyViewed} count={3} />
             <Sidebar></Sidebar>

@@ -19,7 +19,7 @@ model User {
   email      String  @unique
   password   String
   // TODO: change the default path of profile picture to somewhere remote
-  profilePic String  @default("/profile-images/default_profile_image.jpg")
+  profilePic String  @default("/profile-images/default_profile_image.png")
   isAdmin    Boolean @default(false)
 
   recentlyViewed ProductViewed[]
