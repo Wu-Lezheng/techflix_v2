@@ -53,7 +53,7 @@
 
 .mediaSliderNav {
     color: var(--secondary);
-    background: linear-gradient(to right, var(--bg), rgb(36, 37, 41, 0.1));
+
     display: flex;
     justify-content: center;
     align-items: center;

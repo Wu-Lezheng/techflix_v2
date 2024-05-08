@@ -39,10 +39,10 @@ export default function MediaSlider({ product, category, mediaFiles }) {
         <div className={styles.mediaSlider}>
             {cover}
             <div className={styles.mediaPreviews}>
-                <button className={styles.mediaSliderNav} style={{ left: '0' }} onClick={scrollLeft}>
+                <button className={styles.mediaSliderNav} style={{ left: '0', background: 'linear-gradient(to right, var(--bg), rgb(36, 37, 41, 0.1))' }} onClick={scrollLeft}>
                     <AiOutlineDoubleLeft size="1.25rem" />
                 </button>
-                <button className={styles.mediaSliderNav} style={{ right: '0' }} onClick={scrollRight}>
+                <button className={styles.mediaSliderNav} style={{ right: '0', background: 'linear-gradient(to left, var(--bg), rgb(36, 37, 41, 0.1))' }} onClick={scrollRight}>
                     <AiOutlineDoubleRight size="1.25rem" />
                 </button>
                 <div className={styles.allPreviews} style={{ transform: `translateX(-${scrollPosition}px)` }}>
