@@ -1,17 +1,24 @@
-import React from 'react';
-import Image from 'next/image';
+"use client";
 import { formatDate, formatViews } from '@/lib/helper/formatter';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { AiOutlineHeart } from "react-icons/ai";
-import styles from "./ProductCard.module.css"
+import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
 
+    const router = useRouter();
     const formattedDate = formatDate(product.createdAt);
     const formattedViews = formatViews(product.numberOfViews);
 
+    const handleClick = () => {
+        const targetPath = `${product.categoryId}/product/${product.id}`;
+        router.push(targetPath);
+    };
+
     return (
-        <div className={styles.productContainer}>
+        <div className={styles.productContainer} onClick={handleClick}>
             <div className={styles.imageContainer}>
                 <Image src={product.coverImage} alt={product.productName} fill sizes='99vw' className={styles.thumbnail} quality={100} priority={true}></Image>
                 <div className={styles.loveButton}>
