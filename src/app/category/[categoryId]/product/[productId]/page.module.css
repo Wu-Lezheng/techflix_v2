@@ -1,0 +1,14 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.5rem;
+    padding-left: var(--sidebar-width);
+    transition: padding-left 0.25s ease;
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        padding-left: 0;
+    }
+}

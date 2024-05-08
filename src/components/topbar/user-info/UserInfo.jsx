@@ -26,7 +26,7 @@ export default function UserInfo({ user }) {
                         : (<p className={styles.userRole}>User</p>)
                 }
             </div>
-            <Image src={user.profilePic} alt={user.username} height={1920} width={1920} quality={100} className={styles.profilePic}></Image>
+            <Image src={user.profilePic} alt={user.username} height={1920} width={1920} quality={100} className={styles.profilePic} priority></Image>
         </div>
     );
 }

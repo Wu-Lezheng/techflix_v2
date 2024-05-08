@@ -9,5 +9,5 @@
     justify-content: flex-end;
     align-items: center;
     column-gap: 2.5rem;
-    padding: 1rem var(--padding-hr) 0.625rem var(--padding-hr);
+    padding: 0 var(--padding-hr) 0 var(--padding-hr);
 }

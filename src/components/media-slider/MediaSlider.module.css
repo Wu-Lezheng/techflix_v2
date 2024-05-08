@@ -1,0 +1,87 @@
+.mediaSlider {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.mediaContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    max-height: 75vh;
+}
+
+.textOverlay {
+    background: linear-gradient(to right, rgb(36, 37, 41, 0), rgb(36, 37, 41, 0.6) 60%, rgb(36, 37, 41, 0.8) 100%);
+    padding-left: 4rem;
+    padding-right: 3rem;
+    padding-bottom: 3rem;
+    position: absolute;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.productName {
+    font-size: 3rem;
+    font-weight: var(--bold);
+}
+
+.productData {
+    font-size: 1.125rem;
+    font-weight: var(--semi-bold);
+}
+
+.productSummary {
+    color: var(--secondary);
+    font-size: 0.875rem;
+    font-weight: var(--medium);
+}
+
+/* for media previews and nav */
+.mediaPreviews {
+    overflow: hidden;
+    max-width: 100%;
+    position: relative;
+}
+
+.mediaSliderNav {
+    color: var(--secondary);
+    background: linear-gradient(to right, var(--bg), rgb(36, 37, 41, 0.1));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 4%;
+    z-index: 1;
+}
+
+.allPreviews {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    column-gap: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.previewContainer {
+    position: relative;
+    width: calc((100vw - var(--sidebar-width)) / 6);
+    aspect-ratio: 16/9;
+}
+
+.preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    border-radius: 0.5rem;
+}
