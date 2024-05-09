@@ -1,27 +1,35 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from 'next/router';
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import styles from "./page.module.css";
 
-export default function LoginPage() {
+export default function LoginPage(props) {
+
+    const router = useRouter();
+    const { data: session, status } = useSession();
+
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
+    const error = props.searchParams && props.searchParams.error;
+    const callbackUrl = props.searchParams && props.searchParams.callbackUrl;
+
     async function handleSubmit(event) {
         event.preventDefault();
-        const username = "Chris";
-        try {
-            await fetch('/api/add-user', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, email, password })
-            });
-        } catch (error) {
-            console.error(error);
+        const res = await signIn("credentials", {
+            email: email,
+            password: password,
+            redirect: false,
+        });
+        if (!res?.error) {
+            console.log("hello");
+            // TODO: change the url for production
+            router.push(callbackUrl ? callbackUrl : "http://localhost:3000/home");
+        } else {
+            setMessage('Authentication failed. Check if you are using the correct email and if the password matches the provided email.');
         }
     }
 

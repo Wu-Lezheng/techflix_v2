@@ -47,6 +47,9 @@ export const authOptions = {
             }
         })
     ],
+    pages: {
+        signIn: "/signIn",
+    },
     callbacks: {
         session: ({ session, token }) => {
             return {
@@ -68,7 +71,7 @@ export const authOptions = {
             }
             return token;
         }
-    }
+    },
 }
 
 const handler = NextAuth(authOptions)

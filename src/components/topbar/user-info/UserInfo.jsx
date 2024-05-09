@@ -1,3 +1,5 @@
+"use client";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import Notification from "../notification/Notification";
@@ -15,6 +17,10 @@ export default function UserInfo({ user }) {
         );
     }
 
+    function handleClick() {
+        signOut();
+    }
+
     return (
         <div className={styles.infoContainer}>
             <Notification user={user}></Notification>
@@ -26,7 +32,11 @@ export default function UserInfo({ user }) {
                         : (<p className={styles.userRole}>User</p>)
                 }
             </div>
-            <Image src={user.profilePic} alt={user.username} height={1920} width={1920} quality={100} className={styles.profilePic} priority></Image>
+            <Image
+                src={user.profilePic} alt={user.username}
+                height={1920} width={1920}
+                quality={100} className={styles.profilePic} priority
+                onClick={handleClick}></Image>
         </div>
     );
 }

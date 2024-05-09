@@ -15,6 +15,11 @@
     background-color: var(--element-active);
     border: none;
     border-radius: 0.5rem;
+    color: var(--primary);
+}
+
+.searchInput::placeholder {
+    color: var(--secondary);
 }
 
 .searchIcon {

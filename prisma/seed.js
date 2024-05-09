@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, MediaType } = require('@prisma/client');
 const { hash } = require('bcrypt');
 
 const prisma = new PrismaClient();
@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
 
     const password1 = await hash("Password123", 12);
-    const password2 = await hash("Password123", 12);
+    const password2 = await hash("P@ssw0rd", 12);
 
     // create the users
     const alice = await prisma.user.upsert({
@@ -32,6 +32,7 @@ async function main() {
         },
     });
 
+    // create the categories and update the parent category id
     const categories = [
         {
             categoryName: 'Others',
@@ -65,7 +66,6 @@ async function main() {
         },
     ];
 
-    // create the categories and update the parent category id
     const createdCategories = await Promise.all(
         categories.map(category => prisma.category.create({ data: category }))
     );
@@ -141,6 +141,44 @@ async function main() {
 
     const recentlyViewed = await Promise.all(
         viewedProducts.map(viewedProduct => prisma.productViewed.create({ data: viewedProduct }))
+    );
+
+    // create media files
+    const files = [
+        {
+            fileName: 'drone_1.jpg',
+            filePath: '/images/drone_1.jpg',
+            mediaType: MediaType.IMAGE,
+            productId: droneSurveillance.id
+        },
+        {
+            fileName: 'drone_2.jpg',
+            filePath: '/images/drone_2.jpg',
+            mediaType: MediaType.IMAGE,
+            productId: droneSurveillance.id
+        },
+        {
+            fileName: 'drone_3.png',
+            filePath: '/images/drone_3.png',
+            mediaType: MediaType.IMAGE,
+            productId: droneSurveillance.id
+        },
+        {
+            fileName: 'drone_4.png',
+            filePath: '/images/drone_4.png',
+            mediaType: MediaType.IMAGE,
+            productId: droneSurveillance.id
+        },
+        {
+            fileName: 'drone_5.jpg',
+            filePath: '/images/drone_5.jpg',
+            mediaType: MediaType.IMAGE,
+            productId: droneSurveillance.id
+        },
+    ]
+
+    const mediaFiles = await Promise.all(
+        files.map(file => prisma.mediaFile.create({ data: file }))
     );
 }
 

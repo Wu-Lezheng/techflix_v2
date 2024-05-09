@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import styles from "./page.module.css";
 
 export default async function Landing() {
 
@@ -11,7 +10,10 @@ export default async function Landing() {
     <main>
       <div>
         <button>
-          <Link href="/login">Get Started</Link>
+          <Link href="/login">Sign In</Link>
+        </button>
+        <button>
+          <Link href="/home">Get Started</Link>
         </button>
         {
           session

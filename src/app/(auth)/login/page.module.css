@@ -41,3 +41,11 @@
     color: var(--primary);
     cursor: pointer;
 }
+
+.loginButton:hover {
+    background-color: var(--accent-hover);
+}
+
+.loginButton:active {
+    background-color: var(--accent-click);
+}

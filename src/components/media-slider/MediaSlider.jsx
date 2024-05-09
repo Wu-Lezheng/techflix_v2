@@ -1,15 +1,18 @@
 "use client";
 import { formatDate } from "@/lib/helper/formatter";
+import { MediaType } from "@prisma/client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import styles from "./MediaSlider.module.css";
 
 
 export default function MediaSlider({ product, category, mediaFiles }) {
 
-    const files = [{ fileName: 'coverImage', filePath: product.coverImage }, ...mediaFiles];
+    // insert the cover page to the array
+    const files = [{ fileName: 'coverImage', filePath: product.coverImage, mediaType: MediaType.IMAGE }, ...mediaFiles];
 
+    // for navigation and animaiton
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const goToIndex = (index) => {
@@ -17,42 +20,100 @@ export default function MediaSlider({ product, category, mediaFiles }) {
     };
 
     const [scrollPosition, setScrollPosition] = useState(0);
+    const outer = useRef(null);
+    const inner = useRef(null);
 
     const scrollLeft = () => {
-        setScrollPosition(scrollPosition - 100);
+        // Calculate the maximum scroll position to the left
+        const maxScrollLeft = 0;
+
+        // Calculate the new scroll position as a percentage of the container width
+        const containerWidth = outer.current.offsetWidth;
+        const scrollPercentage = 0.3;
+        const scrollDistance = containerWidth * scrollPercentage;
+        const newScrollPosition = Math.max(scrollPosition - scrollDistance, maxScrollLeft);
+
+        // Set the new scroll position
+        setScrollPosition(newScrollPosition);
     };
 
     const scrollRight = () => {
-        setScrollPosition(scrollPosition + 100);
+        // Calculate the maximum scroll position to the right
+        const maxScrollRight = inner.current.offsetWidth - outer.current.offsetWidth;
+
+        // Calculate the new scroll position as a percentage of the container width
+        const containerWidth = outer.current.offsetWidth;
+        const scrollPercentage = 0.3;
+        const scrollDistance = containerWidth * scrollPercentage;
+        const newScrollPosition = Math.min(scrollPosition + scrollDistance, maxScrollRight);
+
+        // Set the new scroll position
+        setScrollPosition(newScrollPosition);
     };
 
-    const cover = <div className={styles.mediaContainer}>
+    useEffect(() => {
+        const handleResize = () => {
+            // Recalculate and clamp the scroll position on window resize
+            setScrollPosition(0);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [scrollPosition]);
+
+
+    // for the first media file, which will always be the cover page
+    const cover = <>
         <Image src={product.coverImage} alt={product.productName} fill sizes="99vw" priority quality={100} style={{ objectFit: 'cover' }}></Image>
         <div className={styles.textOverlay}>
             <p className={styles.productName}>{product.productName}</p>
             <p className={styles.productData} style={{ color: category.labelColor }}>{`${formatDate(product.createdAt)} | ${category.categoryName}`}</p>
             <p className={styles.productSummary}>{product.productSummary}</p>
         </div>
-    </div>;
+    </>;
 
     return (
         <div className={styles.mediaSlider}>
-            {cover}
-            <div className={styles.mediaPreviews}>
+
+            {/* for media display */}
+            <div className={styles.mediaDisplay}>
+                {files.map((file, index) => (
+                    index === 0 ? (
+                        <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>{cover}</div>
+                    ) : (
+                        <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>
+                            <Image src={file.filePath} alt={file.fileName} fill sizes="99vw" priority quality={100} style={{ objectFit: 'cover' }}></Image>
+                        </div>
+                    )
+                ))}
+                {/* for box shadow overlay */}
+                <div className={styles.borderShadow}></div>
+            </div>
+
+            {/* for media previews and slider navigation */}
+            <div ref={outer} className={styles.mediaPreviews}>
                 <button className={styles.mediaSliderNav} style={{ left: '0', background: 'linear-gradient(to right, var(--bg), rgb(36, 37, 41, 0.1))' }} onClick={scrollLeft}>
                     <AiOutlineDoubleLeft size="1.25rem" />
                 </button>
                 <button className={styles.mediaSliderNav} style={{ right: '0', background: 'linear-gradient(to left, var(--bg), rgb(36, 37, 41, 0.1))' }} onClick={scrollRight}>
                     <AiOutlineDoubleRight size="1.25rem" />
                 </button>
-                <div className={styles.allPreviews} style={{ transform: `translateX(-${scrollPosition}px)` }}>
+                <div ref={inner} className={styles.allPreviews} style={{ translate: `-${scrollPosition}px` }}>
                     {files.map((file, index) => (
-                        <div key={index} className={styles.previewContainer}>
-                            <Image src={file.filePath} alt={file.fileName} height={1980} width={1020} priority className={styles.preview}></Image>
+                        <div key={index} className={styles.previewContainer} onClick={() => goToIndex(index)}>
+                            <Image
+                                src={file.filePath} alt={file.fileName}
+                                height={1980} width={1020} priority
+                                className={`${styles.preview} ${index === currentIndex && styles.activePreview}`}>
+                            </Image>
                         </div>
                     ))}
                 </div>
             </div>
+
         </div>
     );
 }
