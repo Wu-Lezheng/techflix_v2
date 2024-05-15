@@ -1,4 +1,4 @@
-const { PrismaClient, MediaType } = require('@prisma/client');
+const { PrismaClient, MediaType, FeatureLayout } = require('@prisma/client');
 const { hash } = require('bcrypt');
 
 const prisma = new PrismaClient();
@@ -149,36 +149,63 @@ async function main() {
             fileName: 'drone_1.jpg',
             filePath: '/images/drone_1.jpg',
             mediaType: MediaType.IMAGE,
-            productId: droneSurveillance.id
+            productId: droneSurveillance.id,
         },
         {
             fileName: 'drone_2.jpg',
             filePath: '/images/drone_2.jpg',
             mediaType: MediaType.IMAGE,
-            productId: droneSurveillance.id
+            productId: droneSurveillance.id,
         },
         {
             fileName: 'drone_3.png',
             filePath: '/images/drone_3.png',
             mediaType: MediaType.IMAGE,
-            productId: droneSurveillance.id
+            productId: droneSurveillance.id,
         },
         {
             fileName: 'drone_4.png',
             filePath: '/images/drone_4.png',
             mediaType: MediaType.IMAGE,
-            productId: droneSurveillance.id
+            productId: droneSurveillance.id,
         },
         {
             fileName: 'drone_5.jpg',
             filePath: '/images/drone_5.jpg',
             mediaType: MediaType.IMAGE,
-            productId: droneSurveillance.id
+            productId: droneSurveillance.id,
         },
-    ]
+    ];
 
     const mediaFiles = await Promise.all(
         files.map(file => prisma.mediaFile.create({ data: file }))
+    );
+
+    const features = [
+        {
+            featureTitle: "Real-time Monitoring and Analysis",
+            featureDescription: "Our software enables users to stream live video feeds from drone cameras and perform real-time analysis of surveillance data. It utilises AI-powered algorithms for object detection, tracking, and anomaly recognition, allowing operators to quickly identify and respond to security threats or suspicious activities.",
+            featureImage: "/feature-images/feature_1.png",
+            layout: FeatureLayout.IMAGE_SPLIT,
+            productId: droneSurveillance.id,
+        },
+        {
+            featureTitle: "Geofencing and Mission Planning",
+            featureDescription: "Users can define custom geofenced areas and set up automated mission plans for drone patrols. The software offers intuitive tools for route planning, waypoint navigation, and mission scheduling, ensuring optimal coverage of target areas while adhering to safety regulations and operational requirements.",
+            featureImage: "/feature-images/feature_2.png",
+            layout: FeatureLayout.IMAGE_STACK,
+            productId: droneSurveillance.id,
+        },
+        {
+            featureTitle: "Data Visualization and Reporting",
+            featureDescription: "Our software provides comprehensive data visualisation tools and reporting capabilities for post-mission analysis and decision-making. Users can visualise surveillance data on interactive maps, generate detailed reports, and extract valuable insights to support strategic planning, incident response, and risk assessment efforts.",
+            layout: FeatureLayout.SPLIT,
+            productId: droneSurveillance.id,
+        },
+    ];
+
+    const productFeatures = await Promise.all(
+        features.map(feature => prisma.feature.create({ data: feature }))
     );
 }
 

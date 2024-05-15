@@ -1,0 +1,53 @@
+.SPLIT,
+.IMAGE_SPLIT {
+    display: flex;
+    flex-direction: row;
+    column-gap: 4rem;
+}
+
+.IMAGE_SPLIT {
+    align-items: center;
+}
+
+.STACK,
+.IMAGE_STACK {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.25rem;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+}
+
+.featureImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.featureTitle {
+    font-size: 1.5rem;
+}
+
+.featureDescription {
+    font-weight: var(--medium);
+    color: var(--secondary);
+    text-align: justify;
+}
+
+.SPLIT .featureTitle {
+    flex: 1;
+}
+
+.SPLIT .featureDescription {
+    flex: 2;
+}
+
+.IMAGE_SPLIT .featureDescription,
+.IMAGE_STACK .featureDescription {
+    margin-top: 1rem;
+}
