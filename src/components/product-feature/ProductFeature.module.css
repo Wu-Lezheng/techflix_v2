@@ -2,7 +2,7 @@
 .IMAGE_SPLIT {
     display: flex;
     flex-direction: row;
-    column-gap: 4rem;
+    column-gap: 3rem;
 }
 
 .IMAGE_SPLIT {
@@ -13,24 +13,37 @@
 .IMAGE_STACK {
     display: flex;
     flex-direction: column;
-    row-gap: 1.25rem;
+    row-gap: 2rem;
 }
 
 .imageContainer {
     position: relative;
     width: 100%;
-    height: auto;
-    max-height: 50vh;
+    height: fit-content;
 }
 
 .featureImage {
     width: 100%;
     height: auto;
+    max-height: 50vh;
     object-fit: cover;
+    border: none;
+    border-radius: 1rem;
+    transition: max-height 0.25s ease;
+}
+
+.IMAGE_SPLIT .imageContainer {
+    flex: 1;
+}
+
+@media screen and (max-height: 640px) {
+    .featureImage {
+        max-height: 300px;
+    }
 }
 
 .featureTitle {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
 }
 
 .featureDescription {
@@ -49,5 +62,5 @@
 
 .IMAGE_SPLIT .featureDescription,
 .IMAGE_STACK .featureDescription {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }

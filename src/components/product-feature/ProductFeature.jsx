@@ -36,7 +36,7 @@ function ProductFeature({ feature }) {
                 <div className={styles.imageContainer}>
                     <Image src={feature.featureImage} alt={feature.featureTitle} width="1920" height="1080" quality={100} className={styles.featureImage} priority></Image>
                 </div>
-                <div>
+                <div style={{ flex: '1' }}>
                     <h2 className={styles.featureTitle}>{feature.featureTitle}</h2>
                     <p className={styles.featureDescription}>{feature.featureDescription}</p>
                 </div>

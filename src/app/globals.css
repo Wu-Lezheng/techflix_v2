@@ -82,6 +82,15 @@ button {
   color: var(--primary);
   cursor: pointer;
   font-weight: var(--medium);
+  transition: background-color 0.2s ease
+}
+
+button:hover {
+  background-color: var(--accent-hover);
+}
+
+button:active {
+  background-color: var(--accent-click);
 }
 
 /* global classes */
