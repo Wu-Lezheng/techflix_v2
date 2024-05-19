@@ -3,6 +3,22 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: var(--sidebar-width);
+    width: var(--o-sidebar-width);
     z-index: 3;
+    border-right: 0.125rem solid var(--bg-t);
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    padding: 0 1rem;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.logo {
+    width: 2.5rem;
+    height: auto;
+    aspect-ratio: 1;
 }

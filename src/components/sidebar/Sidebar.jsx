@@ -1,6 +1,8 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { GoSidebarExpand } from "react-icons/go";
 import styles from "./Sidebar.module.css";
 
 export default function Sidebar() {
@@ -37,6 +39,11 @@ export default function Sidebar() {
 
     return (
         <div className={styles.container}>
+            <div className={styles.header}>
+                <Image src='/logo.png' alt="Logo" width={1920} height={1080} priority className={styles.logo}></Image>
+                <h2>TECHFLIX</h2>
+                <GoSidebarExpand size="1.5rem" />
+            </div>
             {categories.map((category, index) => (
                 <div key={index}>
                     <Link href={`/category/${category.id}`}>{category.categoryName}</Link>
