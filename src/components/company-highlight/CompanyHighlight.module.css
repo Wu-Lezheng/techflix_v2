@@ -1,0 +1,63 @@
+.featureSection {
+    margin-top: 8rem;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    row-gap: 2rem;
+    column-gap: 2rem;
+}
+
+.featureSection:hover>.glowContainer>.containerBorder {
+    opacity: 1;
+}
+
+.glowContainer {
+    position: relative;
+    overflow: hidden;
+    width: 25%;
+    aspect-ratio: 1;
+    text-align: center;
+    border-radius: 1rem;
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
+.glowContainer:hover::before {
+    opacity: 1;
+}
+
+.glowContainer::before,
+.glowContainer>.containerBorder {
+    border-radius: inherit;
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+
+    opacity: 0;
+    transition: opacity 500ms;
+}
+
+.glowContainer::before {
+    background: radial-gradient(800px circle at var(--light-x) var(--light-y), rgba(255, 255, 255, 0.1), transparent 40%);
+    z-index: 3;
+}
+
+.glowContainer>.containerBorder {
+    background: radial-gradient(400px circle at var(--light-x) var(--light-y), rgba(255, 255, 255, 0.4), transparent 40%);
+    z-index: 1;
+}
+
+.glowContainer>.featureContent {
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
+    border-radius: inherit;
+    margin: 1px;
+    background-color: hsl(228, 6%, 18%);
+    position: relative;
+    z-index: 2;
+}

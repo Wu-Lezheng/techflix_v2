@@ -1,6 +1,5 @@
 import ProductGallery from "@/components/product-display/product-gallery/ProductGallery";
 import RecentlyViewed from "@/components/recently-viewed/RecentlyViewed";
-import Sidebar from '@/components/sidebar/Sidebar';
 import Topbar from "@/components/topbar/Topbar";
 import { getUserId } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
@@ -49,7 +48,6 @@ export default async function Home() {
             <Topbar></Topbar>
             <ProductGallery products={products} count={3} />
             <RecentlyViewed products={recentlyViewed} count={3} />
-            <Sidebar></Sidebar>
             <Suspense fallback={<p>Loading video...</p>}>
                 <VideoComponent fileName="my-video.mp4" />
             </Suspense>

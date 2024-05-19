@@ -7,18 +7,20 @@
     transition: padding-left 0.25s ease;
 }
 
-@media screen and (max-width: 1024px) {
-    .container {
-        padding-left: 0;
-    }
-}
-
 .productLayout {
     display: flex;
     flex-direction: row-reverse;
     column-gap: 4rem;
     padding: 0 5vw 4rem 5vw;
     width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+    .productLayout {
+        flex-direction: column;
+        column-gap: 0;
+        row-gap: 8rem;
+    }
 }
 
 .productControl {
@@ -34,7 +36,7 @@
 }
 
 .productDetails {
-    flex: 3;
+    flex: 3.2;
     display: flex;
     flex-direction: column;
     row-gap: 8rem;

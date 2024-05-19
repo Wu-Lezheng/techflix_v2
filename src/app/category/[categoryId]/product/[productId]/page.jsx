@@ -1,5 +1,6 @@
 import MediaSlider from "@/components/media-slider/MediaSlider";
 import ProductFeature from "@/components/product-feature/ProductFeature";
+import ProductSpecs from "@/components/product-specs/ProductSpecs";
 import Topbar from "@/components/topbar/Topbar";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -70,6 +71,7 @@ export default async function CategoryPage({ params }) {
                             <ProductFeature key={index} feature={feature}></ProductFeature>
                         ))
                     }
+                    {specs.length !== 0 && <ProductSpecs specs={specs}></ProductSpecs>}
                 </div>
             </div>
         </div>

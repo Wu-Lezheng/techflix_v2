@@ -1,0 +1,6 @@
+.specsContainer {
+    background-color: var(--bg-t);
+    padding: 2rem 2rem;
+    border: none;
+    border-radius: 1rem;
+}

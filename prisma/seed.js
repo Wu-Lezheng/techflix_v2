@@ -1,4 +1,4 @@
-const { PrismaClient, MediaType, FeatureLayout } = require('@prisma/client');
+const { PrismaClient, MediaType, FeatureLayout, SpecType } = require('@prisma/client');
 const { hash } = require('bcrypt');
 
 const prisma = new PrismaClient();
@@ -206,6 +206,43 @@ async function main() {
 
     const productFeatures = await Promise.all(
         features.map(feature => prisma.feature.create({ data: feature }))
+    );
+
+    const specs = [
+        {
+            specType: SpecType.OS,
+            value: 'Windows, MacOS, Linux',
+            productId: droneSurveillance.id
+        },
+        {
+            specType: SpecType.SUPPORTED_LANGUAGE,
+            value: 'English, Chinese Simplified',
+            productId: droneSurveillance.id
+        },
+        {
+            specType: SpecType.NETWORK_REQUIREMENTS,
+            value: 'Yes',
+            productId: droneSurveillance.id
+        },
+        {
+            specType: SpecType.NETWORK_REQUIREMENTS,
+            value: 'Yes',
+            productId: droneSurveillance.id
+        },
+        {
+            specType: SpecType.HARDWARE_REQUIREMENTS,
+            value: 'CPU: Quad-core 2.0 GHz or faster \nGPU: DirectX 11 compatible for 3D visualisation \nMemory: Minimum 8GB RAM \nStorage: At least 5GB free space',
+            productId: droneSurveillance.id
+        },
+        {
+            specType: SpecType.SOFTWARE_DEPENDENCIES,
+            value: '.NET Core: For building high-performance, cross-platform applications. \nUnity: For 3D visualisation of drone flight paths and surveillance areas. \nOpenCV: For image processing and real-time intelligence gathering. \nTensorFlow: For threat detection using machine learning algorithms. \nDroneKit: For creating powerful drone applications and managing drone fleets. \nLeaflet: For interactive mapping and situational awareness.',
+            productId: droneSurveillance.id
+        },
+    ];
+
+    const productSpecs = await Promise.all(
+        specs.map(spec => prisma.specification.create({ data: spec }))
     );
 }
 
