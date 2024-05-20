@@ -1,0 +1,30 @@
+.container {
+    background-color: var(--bg-t);
+    border: none;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    align-items: center;
+    margin: 0 0.75rem;
+    padding: 0.875rem 0;
+}
+
+.addButton {
+    cursor: pointer;
+    background-color: var(--accent);
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 0.75rem var(--accent),
+        0 0 0.875rem rgb(219, 1, 1, 0.7);
+    transition: box-shadow 0.25s ease;
+}
+
+.addButton:hover {
+    box-shadow: 0 0 0.75rem var(--accent),
+        0 0 0.875rem rgb(219, 1, 1, 0.75),
+        0 0 1rem rgb(219, 1, 1, 0.5);
+}

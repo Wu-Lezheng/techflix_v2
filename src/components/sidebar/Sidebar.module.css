@@ -1,19 +1,40 @@
-.container {
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+}
+
+.sidebar {
+    background-color: var(--bg);
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
     width: var(--o-sidebar-width);
-    z-index: 3;
+    z-index: 4;
     border-right: 0.125rem solid var(--bg-t);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .header {
     display: flex;
     flex-direction: row;
-    padding: 0 1rem;
     justify-content: space-between;
     width: 100%;
+    align-items: center;
+}
+
+.logoSection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
     align-items: center;
 }
 
@@ -21,4 +42,29 @@
     width: 2.5rem;
     height: auto;
     aspect-ratio: 1;
+}
+
+.collapseButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: var(--button-secondary);
+    transition: background-color 0.25s ease;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+}
+
+.collapseButton:hover {
+    background-color: var(--button-secondary-hover);
+}
+
+.menuButton {
+    position: fixed;
+    top: 0.875rem;
+    left: 0.75rem;
+    cursor: pointer;
+    z-index: 5;
+    display: flex;
+    align-items: center;
 }

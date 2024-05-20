@@ -7,6 +7,12 @@
     transition: padding-left 0.25s ease;
 }
 
+@media screen and (max-width: 1024px) {
+    .container {
+        padding-left: 0;
+    }
+}
+
 .productLayout {
     display: flex;
     flex-direction: row-reverse;

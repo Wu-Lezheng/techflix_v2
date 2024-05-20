@@ -5,8 +5,8 @@
 
   --padding-hr: 3.5rem;
   --padding-vt: 1rem;
-  --o-sidebar-width: 15.5rem;
   --sidebar-width: 15.5rem;
+  --o-sidebar-width: 15.5rem;
   --topbar-height: 4rem;
 
   --primary: #fffff0;
@@ -100,15 +100,16 @@ button:active {
   display: flex;
   flex-direction: column;
   row-gap: 2.5rem;
-  padding-left: calc(var(--sidebar-width) + var(--padding-hr));
+  margin-left: var(--sidebar-width);
+  padding-left: var(--padding-hr);
   padding-right: var(--padding-hr);
   padding-top: calc(var(--topbar-height) + var(--padding-vt));
-  transition: padding-left 0.25s ease;
+  transition: margin-left 0.25s ease;
 }
 
 @media screen and (max-width: 1024px) {
-  :root {
-    --sidebar-width: 0;
+  .container {
+    margin-left: 0;
   }
 }
 
