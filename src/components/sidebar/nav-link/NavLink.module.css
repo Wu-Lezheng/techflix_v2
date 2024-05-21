@@ -1,0 +1,68 @@
+/* for nested categories */
+.parent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.375rem;
+    cursor: pointer;
+}
+
+.children {
+    margin-left: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.375rem;
+}
+
+/* for nav link */
+.link {
+    width: 100%;
+    text-decoration: none;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    overflow: hidden;
+    color: var(--secondary);
+    font-weight: var(--semi-bold);
+
+    background-color: none;
+    transition: background-color 0.25s ease;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.625rem;
+}
+
+.currentLink {
+    background-color: var(--element-active);
+    color: var(--primary);
+}
+
+.linkText {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: inherit;
+}
+
+/* for tooltip */
+.tooltip {
+    position: fixed;
+    z-index: 5;
+    background-color: var(--bg);
+    padding: 0.5rem 0.875rem;
+    border: 0.125rem solid var(--element-active);
+    border-radius: 0.25rem;
+    box-shadow: var(--bg-t) 0 0.25rem 1rem 0;
+    font-size: 0.75rem;
+    color: var(--secondary);
+    font-weight: var(--medium);
+}

@@ -2,12 +2,13 @@
 import { useMediaQuery } from "@/lib/helper/mediaQuery";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { AiFillHeart, AiFillHome, AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { BsArchiveFill } from "react-icons/bs";
 import styles from "./Sidebar.module.css";
 import AddNew from "./add-new/AddNew";
+import NavLink from "./nav-link/NavLink";
 
 export default function Sidebar() {
 
@@ -105,11 +106,14 @@ export default function Sidebar() {
                     </div>
                 </div>
 
-                <div>
-                    {categories.map((category, index) => (
-                        <div key={index}>
-                            <Link href={`/category/${category.id}`}>{category.categoryName}</Link>
-                        </div>
+                <div className={styles.links}>
+                    <NavLink icon={<AiFillHome />} path={'/home'} name={'Home'} needCheck={false} />
+                    <NavLink icon={<AiFillHeart />} path={'/favourites'} name={'Favourites'} needCheck={false} />
+                    {categories.filter(category => !category.parentCategoryId).map(category => (
+                        <NavLink
+                            key={category.id} currentCategory={category} allCategories={categories} icon={category.categoryName === 'Others' && <BsArchiveFill />}
+                            path={`/category/${category.id}`} name={category.categoryName} needCheck={true}
+                        />
                     ))}
                 </div>
 

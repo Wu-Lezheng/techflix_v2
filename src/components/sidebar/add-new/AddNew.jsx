@@ -5,9 +5,9 @@ export default function AddNew() {
     return (
         <div className={styles.container}>
             <div className={styles.addButton}>
-                <BsPlusLg size='1.875rem' />
+                <BsPlusLg size='1.75rem' />
             </div>
-            <h2 style={{ fontSize: '1.25rem' }}>Add New</h2>
+            <h2 style={{ fontSize: '1.125rem' }}>Add New</h2>
         </div>
     );
 }
