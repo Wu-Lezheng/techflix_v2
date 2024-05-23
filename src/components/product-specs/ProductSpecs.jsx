@@ -6,9 +6,9 @@ export default function ProductSpecs({ specs }) {
         <div className={styles.specsContainer}>
             {specs.map((spec, index) => (
                 <div key={spec.id}>
-                    <h4>{spec.specType}</h4>
+                    <h4 className={styles.title}>{spec.specType}</h4>
                     {spec.value.split('\n').map((line, index) => (
-                        <p>{line}</p>
+                        <p className={styles.value}>{line}</p>
                     ))}
                     {index !== specs.length - 1 && <br />}
                 </div>

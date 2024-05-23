@@ -1,0 +1,30 @@
+/* Custom Scrollbar */
+.modalContainer {
+    background-color: var(--bg);
+    width: 70%;
+    min-width: 360px;
+    height: 80%;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 3rem;
+    box-shadow: var(--bg-t) 0 0 2rem 0;
+    overflow: auto;
+    transition: height 0.25s ease, padding 0.25s ease, width 0.25s ease;
+}
+
+@media screen and (max-height: 320px) {
+    .modalContainer {
+        height: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .modalContainer {
+        padding: 0.5rem 1.5rem;
+        width: 90%;
+    }
+}
+
+.modalContainer::-webkit-scrollbar {
+    display: none;
+}

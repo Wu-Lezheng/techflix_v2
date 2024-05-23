@@ -49,9 +49,11 @@ hr,
 ul,
 ol,
 li,
-div {
+div,
+dialog {
   margin: 0;
   padding: 0;
+  border: none;
   color: var(--primary);
 }
 
@@ -92,6 +94,10 @@ button:hover {
 
 button:active {
   background-color: var(--accent-click);
+}
+
+a {
+  text-decoration: none;
 }
 
 /* global classes */

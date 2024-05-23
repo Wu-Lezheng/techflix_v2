@@ -4,3 +4,12 @@
     border: none;
     border-radius: 1rem;
 }
+
+.title {
+    font-weight: var(--semi-bold);
+}
+
+.value {
+    color: var(--secondary);
+    font-size: 0.875rem;
+}

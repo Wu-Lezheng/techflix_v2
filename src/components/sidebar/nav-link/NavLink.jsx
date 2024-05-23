@@ -55,14 +55,16 @@ export default function NavLink({ currentCategory, allCategories, icon, path, na
     // content of each nav link
     const displayIcon = icon || (hasChildren ? <AiFillFolder /> : <BsBookmarkFill color={currentCategory.labelColor} />);
     const content = (
-        <div className={`${styles.content} ${pathname === path && styles.currentLink}`}
+        <div className={`${styles.content} ${pathname.includes(path) && styles.currentLink}`}
             onMouseOver={handleMouseOver} onMouseMove={handleMouseMove} onMouseOut={handleMouseOut}
         >
             {displayIcon}
             <p className={styles.linkText}>{name}</p>
-            <AiOutlineRight style={{ transform: isRotated ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }} />
+            {hasChildren && (
+                <AiOutlineRight style={{ transform: isRotated ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }} />
+            )}
             {tooltipVisible && (
-                <motion.div className={styles.tooltip} style={{ left: `${tooltipPosition.x + 10}px`, top: `${tooltipPosition.y + 10}px` }}
+                <motion.div className={styles.tooltip} style={{ left: `${tooltipPosition.x + 16}px`, top: `${tooltipPosition.y + 16}px` }}
                     initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3, delay: 1.5 }}
                 >
                     {name}
