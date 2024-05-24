@@ -23,10 +23,7 @@ export default function Sidebar() {
                 '/api/category/get-category',
                 {
                     method: "GET",
-                    next: {
-                        // TODO: remember to revalidate data with database operations
-                        tags: ['categories']
-                    }
+                    next: { tags: ['categories'] }
                 }
             );
 

@@ -8,7 +8,6 @@ import { Suspense } from 'react';
 async function getAllProducts() {
 
     const products = await prisma.product.findMany();
-
     return products;
 }
 
