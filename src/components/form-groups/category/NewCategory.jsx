@@ -1,53 +1,74 @@
 "use client";
-
-import { createCategory } from "@/lib/helper/categoryActions";
+import { createCategory } from "@/lib/server-actions/categoryActions";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import useSWR, { useSWRConfig } from 'swr';
 import RequiredInput from "../RequiredInput";
+
+// besides server action, using api handler is also possible
+// export async function createCategory(prevState, formData) {
+
+//     const res = await fetch('/api/category/add-category', {
+//         method: 'POST',
+//         body: formData,
+//     });
+
+//     const data = await res.json();
+
+//     if (data.targetUrl) {
+//         redirect(data.targetUrl);
+//     }
+
+//     return data;
+// }
+
+const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 export default function NewCategory() {
 
-    const [state, formAction] = useFormState(createCategory, '');
-    const { pending } = useFormStatus();
-    const formRef = useRef();
+    // use form state and server action
     const pathname = usePathname();
+    const [state, formAction] = useFormState(createCategory, { message: null, targetUrl: pathname });
+    const { pending } = useFormStatus();
+    // for revalidation and redirection in success scenario 
+    const { mutate } = useSWRConfig();
     const router = useRouter();
+    // fetch categories with no children for user to choose as parent category
+    const { data, error } = useSWR('/api/category/get-category/get-no-children', fetcher);
 
     return (
-        <form ref={formRef} className='form' action={(formData) => {
-            formAction(formData);
-            if (!state.message) {
-                // no error, reset and close the modal page
-                formRef.current.reset();
-                router.push(pathname);
-            } else {
-                console.log("Create button clicked without navigation");
-            }
+        <form className='form' action={(formatDate) => {
+            formAction(formatDate, pathname);
+            mutate((key) => typeof key === 'string' && key.startsWith('/api/category/get-category'));
         }}>
 
-            <label className='normalInput'>
-                <RequiredInput required>Category Name</RequiredInput>
-                <input name="categoryName" type="text" required className='textField' />
-            </label>
+            <div className='normalInput'>
+                <RequiredInput required labelFor={"categoryName"}>Category Name</RequiredInput>
+                <input name="categoryName" id="categoryName" type="text" required className='textField' />
+            </div>
 
-            <label className='normalInput'>
-                <RequiredInput required>Category Description</RequiredInput>
-                <textarea name="categoryDescription" required className='textField'></textarea>
-            </label>
+            <div className='normalInput'>
+                <RequiredInput required labelFor={"categoryDescription"}>Category Description</RequiredInput>
+                <textarea name="categoryDescription" id="categoryDescription" required className='longTextField'></textarea>
+            </div>
 
-            <label className='sameLineInput'>
-                <RequiredInput required>Label Color</RequiredInput>
-                <input name="labelColor" type="color" required className='colorPicker' />
-            </label>
+            <div className='sameLineInput'>
+                <RequiredInput required labelFor={"labelColor"}>Label Color</RequiredInput>
+                <input name="labelColor" id="labelColor" type="color" required className='colorPicker' />
+            </div>
 
-            <label className='sameLineInput'>
-                <p>Parent Category</p>
-                <select name="parentCategoryId" className='dropdownSelect'>
-                    <option value="">Null</option>
+            <div className='normalInput'>
+                <label htmlFor="parentCategoryId">Parent Category</label>
+                <select name="parentCategoryId" id="parentCategoryId" className='dropdownSelect'>
+                    <option key="null-option" value="">Null</option>
+                    {!error && !data?.error &&
+                        data?.categories.filter(category => category.categoryName !== 'Others')
+                            .map(category => (
+                                <option key={category.id} value={category.id}>{category.categoryName}</option>
+                            ))}
                 </select>
-            </label>
+            </div>
 
             <div>{state?.message}</div>
 

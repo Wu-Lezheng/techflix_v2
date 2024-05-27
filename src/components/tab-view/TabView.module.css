@@ -8,7 +8,7 @@
     align-items: center;
     box-shadow: inset 0 -2px 0 0 var(--primary);
     font-weight: var(--bold);
-    font-size: 1.125rem;
+    font-size: 1.25rem;
 }
 
 .tabs::-webkit-scrollbar {

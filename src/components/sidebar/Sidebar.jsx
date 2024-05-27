@@ -6,40 +6,19 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AiFillHeart, AiFillHome, AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { BsArchiveFill } from "react-icons/bs";
+import useSWR from "swr";
 import styles from "./Sidebar.module.css";
 import AddNew from "./add-new/AddNew";
 import NavLink from "./nav-link/NavLink";
 
+const fetcher = (...args) => fetch(...args).then(res => res.json());
+
 export default function Sidebar() {
 
-    const [categories, setCategories] = useState([]);
+    const { data, error } = useSWR('/api/category/get-category/get-all', fetcher);
     let isSmallScreen = useMediaQuery("(max-width: 1024px)");
     const [isOpen, setIsOpen] = useState(!isSmallScreen);
     const pathname = usePathname();
-
-    const getCategories = async () => {
-        try {
-            const response = await fetch(
-                '/api/category/get-category',
-                {
-                    method: "GET",
-                    next: { tags: ['categories'] }
-                }
-            );
-
-            if (response) {
-                const { data } = await response.json();
-                if (data) setCategories(data);
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        getCategories();
-    }, []);
 
     useEffect(() => {
         if (isSmallScreen) {
@@ -78,6 +57,11 @@ export default function Sidebar() {
         },
     }
 
+    if (error || data?.error) {
+        // TODO: improve error message styles
+        return <div>Error fetching categories</div>;
+    }
+
     return (
         <>
             {
@@ -106,9 +90,9 @@ export default function Sidebar() {
                 <div className={styles.links}>
                     <NavLink icon={<AiFillHome />} path={'/home'} name={'Home'} needCheck={false} />
                     <NavLink icon={<AiFillHeart />} path={'/favourites'} name={'Favourites'} needCheck={false} />
-                    {categories.filter(category => !category.parentCategoryId).map(category => (
+                    {data?.categories.filter(category => !category.parentCategoryId).map(category => (
                         <NavLink
-                            key={category.id} currentCategory={category} allCategories={categories} icon={category.categoryName === 'Others' && <BsArchiveFill />}
+                            key={category.id} currentCategory={category} allCategories={data.categories} icon={category.categoryName === 'Others' && <BsArchiveFill />}
                             path={`/category/${category.id}`} name={category.categoryName} needCheck={true}
                         />
                     ))}

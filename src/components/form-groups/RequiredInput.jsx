@@ -1,7 +1,5 @@
-export default function RequiredInput({ children, required }) {
+export default function RequiredInput({ children, required, labelFor }) {
     return (
-        <p>
-            {children} {required && <span style={{ color: 'red' }}>*</span>}
-        </p>
+        <label htmlFor={labelFor}>{children} {required && <span style={{ color: 'red' }}>*</span>}</label>
     );
 };

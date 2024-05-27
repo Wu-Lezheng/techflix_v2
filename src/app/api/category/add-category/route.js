@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 
 export async function POST(req) {
 
-    let res = { message: null };
+    let res = { message: null, targetUrl: null };
 
     try {
         const data = await req.formData();
@@ -19,11 +19,13 @@ export async function POST(req) {
                 parentCategoryId: parentCategoryId.length === 0 ? null : parentCategoryId,
             }
         });
+        res.targetUrl = `/category/${newCategory.id}`;
+
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
-            res = { message: e.message };
+            res.message = e.message;
         } else {
-            res = { message: "unable to create category" };
+            res.message = "unable to create category";
         }
     } finally {
         return Response.json(res);

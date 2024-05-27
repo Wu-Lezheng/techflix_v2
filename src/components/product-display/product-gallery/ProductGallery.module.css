@@ -37,8 +37,7 @@
     padding: 1rem 0.5rem;
     border-radius: 0.5rem;
     background-color: var(--bg-t);
-    transition: background-color 0.25s ease;
-    transition: font-size 0.25s ease;
+    transition: background-color 0.25s ease, font-size 0.25s ease;
 }
 
 .navButton:hover {

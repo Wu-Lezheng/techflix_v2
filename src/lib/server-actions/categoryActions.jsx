@@ -1,11 +1,11 @@
 "use server"
 import { Prisma } from "@prisma/client";
-import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import prisma from "../prisma";
 
 export async function createCategory(prevState, formData) {
 
-    let res = { message: null };
+    let res = { message: null, targetUrl: null };
     const categoryName = formData.get('categoryName');
     const categoryDescription = formData.get('categoryDescription');
     const labelColor = formData.get('labelColor');
@@ -20,14 +20,20 @@ export async function createCategory(prevState, formData) {
                 parentCategoryId: parentCategoryId.length === 0 ? null : parentCategoryId,
             }
         });
-        revalidateTag('categories');
+        res.targetUrl = `/category/${newCategory.id}`;
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
-            res = { message: e.message };
+            res.message = e.message;
         } else {
-            res = { message: "unable to create category" };
+            console.log(e);
+            res.message = "unable to create category";
         }
     } finally {
+        if (res.targetUrl) {
+            prevState.targetUrl.includes(`/category/${parentCategoryId}`)
+                ? redirect('/home')
+                : redirect(res.targetUrl)
+        }
         return res;
     }
 }
