@@ -30,9 +30,7 @@ export async function createCategory(prevState, formData) {
         }
     } finally {
         if (res.targetUrl) {
-            prevState.targetUrl.includes(`/category/${parentCategoryId}`)
-                ? redirect('/home')
-                : redirect(res.targetUrl)
+            redirect('/home');
         }
         return res;
     }

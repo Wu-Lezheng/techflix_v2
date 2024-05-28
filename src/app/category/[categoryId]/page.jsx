@@ -1,5 +1,6 @@
 import ProductCard from "@/components/product-display/product-card/ProductCard";
 import Topbar from "@/components/topbar/Topbar";
+import { formatParagraph } from "@/lib/helper/formatter";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -39,7 +40,9 @@ export default async function CategoryPage({ params }) {
             <div className={styles.summary}>
                 <div className={styles.info}>
                     <h1>{category.categoryName}</h1>
-                    <p className={styles.description}>{category.categoryDescription}</p>
+                    <div className={styles.description}>
+                        {formatParagraph(category.categoryDescription)}
+                    </div>
                 </div>
                 <div className={styles.databoxes}>
                     <div>

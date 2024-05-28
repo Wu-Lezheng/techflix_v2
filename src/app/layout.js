@@ -14,6 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <link rel="icon" href="/logo.png" sizes="any" />
         <Providers>
           {children}
           <AddNewModal></AddNewModal>

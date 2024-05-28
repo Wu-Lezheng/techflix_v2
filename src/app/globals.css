@@ -15,7 +15,8 @@
   --accent-hover: #FF2727;
   --accent-click: #C00101;
 
-  --element-active: rgb(87, 90, 98, 0.7);
+  --element-active: rgba(87, 90, 98, 0.7);
+  --element-active-light: hsla(224, 6%, 80%, 0.7);
 
   --button-secondary: hsla(60, 100%, 97%, 0.2);
   --button-secondary-hover: hsla(60, 100%, 97%, 0.3);
@@ -142,11 +143,16 @@ a {
   font-weight: var(--semi-bold);
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: var(--secondary);
+  font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';
+}
+
 .normalInput {
   display: flex;
   flex-direction: column;
   row-gap: 0.75rem;
-  width: 100%;
 }
 
 .sameLineInput {
@@ -158,15 +164,107 @@ a {
 }
 
 .textField,
-.longTextField {
+.longTextField,
+.dropdownSelect {
+  font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';
   background: var(--element-active);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   color: var(--primary);
-  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: var(--medium);
+  transition: box-shadow 0.2s ease, width 0.25s ease;
+}
+
+.textField:focus,
+.longTextField:focus {
+  outline: none;
+  box-shadow: var(--element-active-light) 0px 0px 0.125rem 0.125rem;
 }
 
 .textField {
-  width: 80%;
-  padding: 0.5rem 0.75rem;
+  width: 75%;
+  max-width: var(--small-screen);
+}
+
+.longTextField {
+  width: 100%;
+  max-width: var(--small-screen);
+  overflow: hidden;
+  resize: none;
+}
+
+.colorPicker {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 0.125rem;
+  cursor: pointer;
+}
+
+.dropdownSelect {
+  cursor: pointer;
+  width: 75%;
+  max-width: var(--small-screen);
+}
+
+.dropdownSelect:active,
+.dropdownSelect:focus {
+  outline: none;
+}
+
+.dropdownSelect option {
+  background: var(--bg-dark);
+}
+
+.dropdownSelect option:hover {
+  background: var(--bg-t);
+}
+
+@media screen and (max-width: 768px) {
+
+  .textField,
+  .dropdownSelect {
+    width: 100%;
+  }
+}
+
+.fileUpload {
+  border: 0.125rem dashed var(--accent);
+  border-radius: 0.25rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+
+  .fileUploadText {
+    font-weight: var(--medium);
+    color: var(--secondary);
+  }
+
+  .fileBrowse {
+    color: var(--accent);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+
+  .fileBrowse:hover {
+    color: var(--accent-hover);
+  }
+
+  .previewContainer {
+    background-color: var(--element-active);
+    padding: 0.5rem 0.25rem;
+  }
+
+  .previewImage {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4/3;
+  }
+
 }

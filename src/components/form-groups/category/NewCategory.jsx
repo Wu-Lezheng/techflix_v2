@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from 'react-dom';
 import useSWR, { useSWRConfig } from 'swr';
-import RequiredInput from "../RequiredInput";
+import AutoResizeTextArea from "../input-helper/AutoResizeTextArea";
+import RequiredInput from "../input-helper/RequiredInput";
 
 // besides server action, using api handler is also possible
 // export async function createCategory(prevState, formData) {
@@ -45,12 +46,12 @@ export default function NewCategory() {
 
             <div className='normalInput'>
                 <RequiredInput required labelFor={"categoryName"}>Category Name</RequiredInput>
-                <input name="categoryName" id="categoryName" type="text" required className='textField' />
+                <input name="categoryName" id="categoryName" type="text" required placeholder="Enter the category name" className='textField' />
             </div>
 
             <div className='normalInput'>
                 <RequiredInput required labelFor={"categoryDescription"}>Category Description</RequiredInput>
-                <textarea name="categoryDescription" id="categoryDescription" required className='longTextField'></textarea>
+                <AutoResizeTextArea name={"categoryDescription"} required={true} placeholder={"Enter a short description of the category"} />
             </div>
 
             <div className='sameLineInput'>

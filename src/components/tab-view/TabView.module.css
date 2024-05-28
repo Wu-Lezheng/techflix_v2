@@ -15,6 +15,12 @@
     display: none;
 }
 
+@media screen and (max-width: 768px) {
+    .tabs {
+        font-size: 1.125rem;
+    }
+}
+
 .tab {
     cursor: pointer;
     padding: 1rem 1.5rem;

@@ -1,3 +1,4 @@
+import { formatParagraph } from "@/lib/helper/formatter";
 import styles from "./ProductSpecs.module.css";
 
 export default function ProductSpecs({ specs }) {
@@ -7,9 +8,9 @@ export default function ProductSpecs({ specs }) {
             {specs.map((spec, index) => (
                 <div key={spec.id}>
                     <h4 className={styles.title}>{spec.specType}</h4>
-                    {spec.value.split('\n').map((line, index) => (
-                        <p className={styles.value}>{line}</p>
-                    ))}
+                    <div className={styles.value}>
+                        {formatParagraph(spec.value)}
+                    </div>
                     {index !== specs.length - 1 && <br />}
                 </div>
             ))}

@@ -27,3 +27,13 @@ export function formatViews(num) {
         return (num / 1000).toFixed(1) + 'k';
     }
 }
+
+export function formatParagraph(text) {
+    return (
+        <>
+            {text.split('\n').map((line, index) => (
+                <p key={index} style={{ color: "inherit" }}>{line}</p>
+            ))}
+        </>
+    )
+}

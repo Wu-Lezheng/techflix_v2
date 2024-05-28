@@ -15,7 +15,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 export default function Sidebar() {
 
-    const { data, error } = useSWR('/api/category/get-category/get-all', fetcher);
+    const { data, error } = useSWR('/api/category/get-category/get-all', fetcher, { refreshInterval: 1000 });
     let isSmallScreen = useMediaQuery("(max-width: 1024px)");
     const [isOpen, setIsOpen] = useState(!isSmallScreen);
     const pathname = usePathname();
