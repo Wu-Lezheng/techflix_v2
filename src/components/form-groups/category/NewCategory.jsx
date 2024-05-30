@@ -62,7 +62,7 @@ export default function NewCategory() {
             <div className='normalInput'>
                 <label htmlFor="parentCategoryId">Parent Category</label>
                 <select name="parentCategoryId" id="parentCategoryId" className='dropdownSelect'>
-                    <option key="null-option" value="">Null</option>
+                    <option key="null-option" value="">No parent</option>
                     {!error && !data?.error &&
                         data?.categories.filter(category => category.categoryName !== 'Others')
                             .map(category => (

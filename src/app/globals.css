@@ -223,26 +223,22 @@ textarea::placeholder {
   background: var(--bg-t);
 }
 
-@media screen and (max-width: 768px) {
-
-  .textField,
-  .dropdownSelect {
-    width: 100%;
-  }
-}
-
 .fileUpload {
   border: 0.125rem dashed var(--accent);
   border-radius: 0.25rem;
-  padding: 2rem;
+  padding: 1.75rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1rem;
+  width: 70%;
+  max-width: var(--small-screen);
+  transition: border-color 0.25s ease;
 
   .fileUploadText {
     font-weight: var(--medium);
     color: var(--secondary);
+    text-align: center;
   }
 
   .fileBrowse {
@@ -256,15 +252,13 @@ textarea::placeholder {
     color: var(--accent-hover);
   }
 
-  .previewContainer {
-    background-color: var(--element-active);
-    padding: 0.5rem 0.25rem;
-  }
+}
 
-  .previewImage {
-    display: block;
+@media screen and (max-width: 768px) {
+
+  .textField,
+  .dropdownSelect,
+  .fileUpload {
     width: 100%;
-    aspect-ratio: 4/3;
   }
-
 }

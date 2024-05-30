@@ -1,8 +1,7 @@
 "use client";
-import { formatFileSize } from "@/lib/helper/formatter";
-import Image from "next/image";
 import { useRef, useState } from "react";
-import { AiFillDelete, AiOutlineCloudUpload } from "react-icons/ai";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import MediaPreview from "./MediaPreview";
 import RequiredInput from "./RequiredInput";
 
 export default function SingleUpload({ required, title, name, file, setFile }) {
@@ -57,7 +56,7 @@ export default function SingleUpload({ required, title, name, file, setFile }) {
     }
 
     return (
-        <div className='normalInput' style={{ width: '60%' }}>
+        <div className='normalInput'>
             <RequiredInput labelFor={name} required={required}>{title}</RequiredInput>
             <div
                 onDragOver={(e) => {
@@ -73,7 +72,7 @@ export default function SingleUpload({ required, title, name, file, setFile }) {
                 }}
                 onDrop={handleDrop}
                 className="fileUpload"
-                style={file && { display: "none" }}
+                style={{ display: file && file !== '' && "none", borderColor: fileEnter && 'var(--accent-hover)' }}
             >
                 <AiOutlineCloudUpload color="var(--accent)" size={"4rem"} />
                 <p className="fileUploadText">Drop your file into the box or {" "}
@@ -83,17 +82,8 @@ export default function SingleUpload({ required, title, name, file, setFile }) {
                     required={required} onChange={handleFileChange} style={{ display: "none" }}
                 />
             </div>
-            {file && (
-                <div className="previewContainer">
-                    <div>
-                        <Image src={fileUrl} alt={file?.name} priority width={1920} height={1080} className="previewImage"></Image>
-                        <div>
-                            <p>{file?.name}</p>
-                            <p>{formatFileSize(file?.size)}</p>
-                        </div>
-                    </div>
-                    <AiFillDelete />
-                </div>
+            {file && file !== '' && (
+                <MediaPreview file={file} fileUrl={fileUrl} handleClick={() => { setFile(''); inputRef.current.value = ''; }}></MediaPreview>
             )}
         </div>
     );

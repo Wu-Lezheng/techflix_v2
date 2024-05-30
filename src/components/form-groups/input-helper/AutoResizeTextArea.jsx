@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-export default function AutoResizeTextArea({ name, required, placeholder }) {
+export default function AutoResizeTextArea({ name, required, placeholder, value, handleChange }) {
 
     const textareaRef = useRef(null);
 
@@ -33,6 +33,8 @@ export default function AutoResizeTextArea({ name, required, placeholder }) {
             className="longTextField"
             required={required}
             placeholder={placeholder}
+            value={value}
+            onChange={handleChange}
         ></textarea>
     );
 }

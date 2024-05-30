@@ -1,0 +1,52 @@
+.previewContainer {
+    background-color: var(--element-active);
+    padding: 1rem 1.5rem;
+    width: 75%;
+    max-width: var(--small-screen);
+    aspect-ratio: 6.5;
+    border: none;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    transition: width 0.25s ease;
+}
+
+.previewInfo {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1.5rem;
+    align-items: center;
+    overflow: hidden;
+}
+
+.previewImage {
+    object-fit: cover;
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.previewData {
+    height: 100%;
+    padding: 0.625rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.75rem;
+}
+
+@media screen and (max-width: 768px) {
+
+    .previewContainer {
+        padding: 1rem 1.25rem;
+        width: 100%;
+    }
+
+    .previewData {
+        padding: 0.25rem 0;
+    }
+}
