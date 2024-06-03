@@ -14,6 +14,7 @@
   --accent: #DB0101;
   --accent-hover: #FF2727;
   --accent-click: #C00101;
+  --accent-disabled: #d34a4a;
 
   --element-active: rgba(87, 90, 98, 0.7);
   --element-active-light: hsla(224, 6%, 80%, 0.7);
@@ -97,6 +98,11 @@ button:active {
   background-color: var(--accent-click);
 }
 
+button[aria-disabled="true"] {
+  background-color: var(--accent-disabled);
+  pointer-events: none;
+}
+
 a {
   text-decoration: none;
 }
@@ -141,6 +147,15 @@ a {
   row-gap: 1.5rem;
   padding: 0 1.5rem;
   font-weight: var(--semi-bold);
+}
+
+.formError {
+  background-color: var(--bg-dark);
+  color: var(--secondary);
+  border: none;
+  border-radius: 0 0.25rem 0.25rem 0;
+  padding: 1rem 2.5rem;
+  box-shadow: inset 0.25rem 0 0 0 red;
 }
 
 input::placeholder,
@@ -230,8 +245,9 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 1rem;
-  width: 70%;
+  width: 75%;
   max-width: var(--small-screen);
   transition: border-color 0.25s ease;
 

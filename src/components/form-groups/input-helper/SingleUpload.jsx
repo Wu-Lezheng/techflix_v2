@@ -4,11 +4,18 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import MediaPreview from "./MediaPreview";
 import RequiredInput from "./RequiredInput";
 
-export default function SingleUpload({ required, title, name, file, setFile }) {
+export default function SingleUpload({ required, title, name, file, setProductData }) {
 
     const [fileUrl, setFileUrl] = useState(null);
     const [fileEnter, setFileEnter] = useState(false);
     const inputRef = useRef(null);
+
+    function setFile(file) {
+        setProductData(prevState => ({
+            ...prevState,
+            coverImage: file
+        }));
+    }
 
     const handleFileChange = (event) => {
         event.preventDefault();
@@ -64,6 +71,7 @@ export default function SingleUpload({ required, title, name, file, setFile }) {
                     setFileEnter(true);
                 }}
                 onDragLeave={(e) => {
+                    e.preventDefault();
                     setFileEnter(false);
                 }}
                 onDragEnd={(e) => {
@@ -83,7 +91,7 @@ export default function SingleUpload({ required, title, name, file, setFile }) {
                 />
             </div>
             {file && file !== '' && (
-                <MediaPreview file={file} fileUrl={fileUrl} handleClick={() => { setFile(''); inputRef.current.value = ''; }}></MediaPreview>
+                <MediaPreview file={file} fileUrl={fileUrl} handleClick={() => { setFile(''); setFileUrl(null); inputRef.current.value = ''; }}></MediaPreview>
             )}
         </div>
     );

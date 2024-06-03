@@ -1,31 +1,59 @@
 "use server"
 import getFileExtension from "@/lib/helper/fileHelper";
 import { createId } from "@paralleldrive/cuid2";
-import { mkdir, writeFile } from "fs/promises";
+import { MediaType } from "@prisma/client";
+import { mkdir, unlink, writeFile } from "fs/promises";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import path from "path";
 import prisma from "../prisma";
 
 export async function createProduct(formData) {
 
+    let res = { message: null, redirectPath: null };
+
     const productName = formData.get('productName');
     const productSummary = formData.get('productSummary');
     const categoryId = formData.get('categoryId');
     const coverImage = formData.get('coverImage');
-    let CoverImagePath;
+    let coverImagePath;
     let createdProduct;
+
+    const mediaFiles = formData.getAll("mediaFiles");
+    let mediaFilePaths;
 
     try {
         // TODO: change the target path to somewhere remote
         const { fileUrl, fullFilePath } = await uploadFile(coverImage, "/cover-images/");
-        CoverImagePath = fullFilePath;
+        coverImagePath = fullFilePath;
 
         createdProduct = await prisma.product.create({
             data: {
                 productName, productSummary, coverImage: fileUrl, categoryId
             }
         });
+
+        // create product media files
+        if (mediaFiles?.length > 0) {
+            mediaFilePaths = await uploadMediaFiles(mediaFiles, createdProduct.id);
+        }
+
+        res.redirectPath = `/category/${categoryId}`;
+
     } catch (error) {
-        return Response.json({ message: error.message });
+        console.log(error.message);
+
+        if (coverImagePath) {
+            await deleteFile(coverImagePath);
+        }
+
+        res.message = error.message;
+    } finally {
+        if (res.redirectPath) {
+            revalidatePath(res.redirectPath);
+            redirect(res.redirectPath);
+        }
+        return res;
     }
 
 }
@@ -43,4 +71,36 @@ async function uploadFile(file, targetPath) {
     } catch (error) {
         throw new Error(`Upload of ${file.name} failed: ${error.message}`);
     }
+}
+
+async function deleteFile(fullPath) {
+    await unlink(fullPath, (e) => {
+        if (e) {
+            throw e;
+        }
+        console.log(`File at ${fullPath} is deleted`);
+    });
+}
+
+async function uploadMediaFiles(mediaFiles, productId) {
+
+    let outputFilePaths = [];
+
+    try {
+        await Promise.all(mediaFiles.map(async (file) => {
+            // TODO: as this is a localhost solution, plase change how upload path is handled
+            const targetPath = file.type.startsWith('image/') ? "/images/" : "/videos/";
+            const mediaType = file.type.startsWith('image/') ? MediaType.IMAGE : MediaType.VIDEO;
+            const { fileUrl, fullFilePath } = await uploadFile(file, targetPath);
+            outputFilePaths.push(fullFilePath);
+            await prisma.mediaFile.create({
+                data: { fileName: file.name, filePath: fileUrl, mediaType: mediaType, productId: productId }
+            });
+        }));
+    } catch (e) {
+        throw new Error(e.message);
+    } finally {
+        return outputFilePaths;
+    }
+
 }

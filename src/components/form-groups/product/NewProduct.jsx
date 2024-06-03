@@ -32,6 +32,7 @@ export default function NewProduct() {
         features: []
     });
     const [pending, setPending] = useState(false);
+    const [message, setMessage] = useState(null);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -102,21 +103,22 @@ export default function NewProduct() {
         });
 
         const res = await createProduct(formData);
-
         setPending(false);
+        setMessage(res?.message);
 
     }
 
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', rowGap: '2.5rem' }}>
             <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
-            <MediaUploadForNew formRef={formRefs[1]} />
-            <div>
+            <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+            {message && <div className="formError" style={{ margin: '0 1.5rem' }}>{message}</div>}
+            <div style={{ margin: '0 1.5rem' }}>
                 <Link href={pathname}>
                     <button>Cancel</button>
                 </Link>
                 <button type='reset' onClick={handleReset}>Reset</button>
-                <button type='submit' onClick={handleSubmit} disabled={pending}>Create</button>
+                <button type='submit' onClick={handleSubmit} aria-disabled={pending}>Create</button>
             </div>
         </div>
     );

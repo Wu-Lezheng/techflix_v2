@@ -42,7 +42,7 @@ model Category {
 
 model Product {
   id             String   @id @default(cuid())
-  productName    String
+  productName    String   @unique
   productSummary String
   numberOfViews  Int      @default(0)
   createdAt      DateTime @default(now()) @map(name: "created_at")

@@ -3,7 +3,7 @@ import { formatDate } from "@/lib/helper/formatter";
 import { MediaType } from "@prisma/client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+import { AiFillPlayCircle, AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import styles from "./MediaSlider.module.css";
 
 
@@ -85,7 +85,13 @@ export default function MediaSlider({ product, category, mediaFiles }) {
                         <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>{cover}</div>
                     ) : (
                         <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>
-                            <Image src={file.filePath} alt={file.fileName} fill sizes="99vw" priority quality={100} style={{ objectFit: 'cover' }}></Image>
+                            {
+                                file.mediaType === MediaType.IMAGE
+                                    ? <Image src={file.filePath} alt={file.fileName} fill sizes="99vw" priority quality={100} style={{ objectFit: 'cover' }}></Image>
+                                    : <video src={file.filePath} controls width={"100%"} height={"100%"} style={{ objectFit: 'cover' }}>
+                                        Your browser does not support the video tag.
+                                    </video>
+                            }
                         </div>
                     )
                 ))}
@@ -102,13 +108,23 @@ export default function MediaSlider({ product, category, mediaFiles }) {
                     <AiOutlineDoubleRight size="1.25rem" />
                 </button>
                 <div ref={inner} className={styles.allPreviews} style={{ translate: `-${scrollPosition}px` }}>
-                    {files.map((file, index) => (
+                    {files?.map((file, index) => (
                         <div key={index} className={styles.previewContainer} onClick={() => goToIndex(index)}>
-                            <Image
-                                src={file.filePath} alt={file.fileName}
-                                height={1980} width={1020} priority
-                                className={`${styles.preview} ${index === currentIndex && styles.activePreview}`}>
-                            </Image>
+                            {
+                                file.mediaType === MediaType.IMAGE
+                                    ? <Image
+                                        src={file.filePath} alt={file.fileName}
+                                        height={1980} width={1020} priority
+                                        className={`${styles.preview} ${index === currentIndex && styles.activePreview}`}>
+                                    </Image>
+                                    : <>
+                                        <video src={file.filePath} className={`${styles.preview} ${index === currentIndex && styles.activePreview}`}>
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <AiFillPlayCircle color="var(--primary)" size={"3rem"} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+                                    </>
+                            }
+
                         </div>
                     ))}
                 </div>

@@ -71,7 +71,7 @@ export default function NewCategory() {
                 </select>
             </div>
 
-            <div>{state?.message}</div>
+            {state?.message && <div className="formError">{state.message}</div>}
 
             <div>
                 <Link href={pathname}>

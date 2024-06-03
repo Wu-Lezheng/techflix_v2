@@ -175,6 +175,12 @@ async function main() {
             mediaType: MediaType.IMAGE,
             productId: droneSurveillance.id,
         },
+        {
+            fileName: 'drone_6.mp4',
+            filePath: '/videos/drone_6.mp4',
+            mediaType: MediaType.VIDEO,
+            productId: droneSurveillance.id,
+        },
     ];
 
     const mediaFiles = await Promise.all(

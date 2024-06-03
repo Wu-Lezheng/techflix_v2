@@ -11,13 +11,6 @@ export default function ProductEssentialsForNew({ formRef, productData, handleCh
     // fetch categories with no children for user to choose as parent category
     const { data, error } = useSWR('/api/category/get-category/get-no-children', fetcher);
 
-    const setCoverImage = (file) => {
-        setProductData({
-            ...productData,
-            coverImage: file,
-        });
-    }
-
     return (
         <form ref={formRef} className='form'>
 
@@ -45,9 +38,7 @@ export default function ProductEssentialsForNew({ formRef, productData, handleCh
                 </select>
             </div>
 
-            <SingleUpload required={true} title={"Cover Image"} name={"coverImage"} file={productData.coverImage} setFile={setCoverImage} />
-
-            <div></div>
+            <SingleUpload required={true} title={"Cover Image"} name={"coverImage"} file={productData.coverImage} setProductData={setProductData} />
 
         </form>
     );
