@@ -1,8 +1,10 @@
+import EditCategoryModal from "@/components/modal/edit-category-modal/EditCategoryModal";
 import ProductCard from "@/components/product-display/product-card/ProductCard";
 import Topbar from "@/components/topbar/Topbar";
 import { formatParagraph } from "@/lib/helper/formatter";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import styles from "./page.module.css";
 
@@ -37,6 +39,7 @@ export default async function CategoryPage({ params }) {
     return (
         <div className="container">
             <Topbar></Topbar>
+
             <div className={styles.summary}>
                 <div className={styles.info}>
                     <h1>{category.categoryName}</h1>
@@ -54,7 +57,11 @@ export default async function CategoryPage({ params }) {
                         <p className={styles.dataName}>Views</p>
                     </div>
                     {
-                        await isAdmin() && (<button className={styles.editButton}>Edit</button>)
+                        await isAdmin() && category.categoryName !== "Others" && (
+                            <Link href="?edit=true">
+                                <button className={styles.editButton}>Edit</button>
+                            </Link>
+                        )
                     }
                 </div>
             </div>
@@ -79,6 +86,8 @@ export default async function CategoryPage({ params }) {
                         : (<p>No products found</p>)
                 }
             </div>
+
+            <EditCategoryModal category={category} />
         </div>
     );
 }

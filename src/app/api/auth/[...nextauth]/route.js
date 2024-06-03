@@ -42,6 +42,7 @@ export const authOptions = {
                     id: user.id,
                     email: user.email,
                     name: user.username,
+                    isAdmin: user.isAdmin,
                     randomKey: createId(),
                 }
             }
@@ -57,6 +58,7 @@ export const authOptions = {
                 user: {
                     ...session.user,
                     id: token.id,
+                    isAdmin: token.isAdmin,
                     randomKey: token.randomKey
                 }
             };
@@ -66,6 +68,7 @@ export const authOptions = {
                 return {
                     ...token,
                     id: user.id,
+                    isAdmin: user.isAdmin,
                     randomKey: user.randomKey
                 };
             }

@@ -25,9 +25,7 @@ export default function LoginPage(props) {
             redirect: false,
         });
         if (!res?.error) {
-            console.log("hello");
-            // TODO: change the url for production
-            router.push(callbackUrl ? callbackUrl : "http://localhost:3000/home");
+            router.push(callbackUrl ? callbackUrl : "/home");
         } else {
             setMessage('Authentication failed. Check if you are using the correct email and if the password matches the provided email.');
         }

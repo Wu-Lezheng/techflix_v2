@@ -9,11 +9,9 @@ export default function UserInfo({ user }) {
 
     if (!user) {
         return (
-            <div>
-                <button>
-                    <Link href="/login">Sign In</Link>
-                </button>
-            </div>
+            <button style={{ fontSize: '0.875rem', height: '45%' }}>
+                <Link href="/login">Sign In</Link>
+            </button>
         );
     }
 

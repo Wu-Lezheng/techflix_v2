@@ -1,6 +1,5 @@
-import prisma from "../prisma";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
 // TODO: consider setting the user globally for better performance but this is not secure
 let currentUser;
@@ -8,11 +7,7 @@ let currentUser;
 export async function isAdmin() {
     const session = await getServerSession(authOptions);
     if (session && session.user) {
-        const userId = session.user.id;
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        })
-        return user.isAdmin;
+        return session.user.isAdmin;
     }
     return false;;
 }

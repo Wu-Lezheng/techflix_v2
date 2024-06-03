@@ -1,33 +1,21 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import styles from "./Modal.module.css";
 
-export default function Modal({ children, name }) {
-
-    const searchParams = useSearchParams();
-    const modalName = searchParams.get(name);
+export default function Modal({ children }) {
 
     useEffect(() => {
-        if (modalName) {
-            // Disable page scrolling
-            document.body.style.overflow = "hidden";
-        } else {
-            // Enable page scrolling
-            document.body.style.overflow = "";
-        }
+        document.body.style.overflow = "hidden";
 
         // Cleanup function to restore scrolling when component unmounts
         return () => {
             document.body.style.overflow = "";
         };
-    }, [modalName]);
+    }, []);
 
     return (
-        <>
-            {modalName &&
-                <dialog className={styles.modal}>{children}</dialog>
-            }
-        </>
+        <dialog className={styles.modal}>
+            <div className={styles.modalContainer}>{children}</div>
+        </dialog>
     );
 }
