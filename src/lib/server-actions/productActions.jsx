@@ -3,8 +3,6 @@ import getFileExtension from "@/lib/helper/fileHelper";
 import { createId } from "@paralleldrive/cuid2";
 import { MediaType } from "@prisma/client";
 import { mkdir, unlink, writeFile } from "fs/promises";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import path from "path";
 import prisma from "../prisma";
 
@@ -43,16 +41,25 @@ export async function createProduct(formData) {
     } catch (error) {
         console.log(error.message);
 
+        // perform clean-ups
         if (coverImagePath) {
             await deleteFile(coverImagePath);
         }
 
+        if (createdProduct) {
+            await prisma.product.delete({
+                where: { id: createdProduct.id }
+            })
+        }
+
+        if (mediaFilePaths?.length > 0) {
+            await Promise.all(mediaFilePaths.map(async (path) => {
+                await deleteFile(path);
+            }))
+        }
+
         res.message = error.message;
     } finally {
-        if (res.redirectPath) {
-            revalidatePath(res.redirectPath);
-            redirect(res.redirectPath);
-        }
         return res;
     }
 
@@ -74,6 +81,7 @@ async function uploadFile(file, targetPath) {
 }
 
 async function deleteFile(fullPath) {
+    // TODO: call some API instead of handling this locally
     await unlink(fullPath, (e) => {
         if (e) {
             throw e;
@@ -103,4 +111,35 @@ async function uploadMediaFiles(mediaFiles, productId) {
         return outputFilePaths;
     }
 
+}
+
+export async function deleteProduct(product) {
+    let res = { message: null, redirectPath: null };
+    let categoryId = product.categoryId;
+
+    try {
+        // get all file paths
+        const mediaFilePaths = await prisma.mediaFile.findMany({
+            where: { productId: product.id, },
+            select: { filePath: true, },
+        });
+        const allFilePaths = [...mediaFilePaths, { filePath: product.coverImage }];
+
+        // delete the product
+        const deletedProduct = await prisma.product.delete({
+            where: { id: product.id }
+        });
+
+        // TODO: delete file from local machine, change to some API
+        await Promise.all(allFilePaths.map(async ({ filePath }) => {
+            const fullPath = path.join(process.cwd(), "public" + filePath);
+            await deleteFile(fullPath);
+        }));
+
+        res.redirectPath = `/category/${categoryId}`;
+    } catch (e) {
+        res.message = e.message;
+    } finally {
+        return res;
+    }
 }

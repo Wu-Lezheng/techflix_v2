@@ -1,14 +1,15 @@
 "use client";
-import { createProduct } from "@/lib/server-actions/productActions";
+import { createProduct, deleteProduct } from "@/lib/server-actions/productActions";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import MediaUploadForNew from "./MediaUploadForNew";
 import ProductEssentialsForNew from "./ProductEssentialsForNew";
 
-export default function NewProduct() {
+export default function ProductForm({ product }) {
 
     const pathname = usePathname();
+    const router = useRouter();
 
     // for form refs
     const formRefs = [useRef(null), useRef(null)];
@@ -21,9 +22,9 @@ export default function NewProduct() {
         specifications: [], features: []
     };
     const [productData, setProductData] = useState({
-        productName: '',
-        productSummary: '',
-        categoryId: '',
+        productName: product?.productName || '',
+        productSummary: product?.productSummary || '',
+        categoryId: product?.categoryId || '',
         coverImage: '',
         mediaFiles: [],
         tags: [],
@@ -45,6 +46,17 @@ export default function NewProduct() {
     const handleReset = () => {
         setProductData(defaultData);
     };
+
+    const handleDelete = async (event) => {
+        event.preventDefault();
+        const { message, redirectPath } = await deleteProduct(product);
+        setPending(false);
+        setMessage(message);
+        if (redirectPath) {
+            router.push(redirectPath);
+            router.refresh();
+        }
+    }
 
     async function handleSubmit(e) {
 
@@ -102,9 +114,13 @@ export default function NewProduct() {
             }
         });
 
-        const res = await createProduct(formData);
+        const { message, redirectPath } = await createProduct(formData);
         setPending(false);
-        setMessage(res?.message);
+        setMessage(message);
+        if (redirectPath) {
+            router.push(redirectPath);
+            router.refresh();
+        }
 
     }
 
@@ -117,7 +133,10 @@ export default function NewProduct() {
                 <Link href={pathname}>
                     <button>Cancel</button>
                 </Link>
-                <button type='reset' onClick={handleReset}>Reset</button>
+                {product
+                    ? <button onClick={handleDelete} aria-disabled={pending}>Delete</button>
+                    : <button type='reset' onClick={handleReset} >Reset</button>
+                }
                 <button type='submit' onClick={handleSubmit} aria-disabled={pending}>Create</button>
             </div>
         </div>

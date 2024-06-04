@@ -3,6 +3,28 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
 
+async function moveProductsInCategory(categoryId) {
+    const othersCategory = await prisma.category.findUnique({
+        where: { categoryName: "Others" },
+    });
+
+    if (!othersCategory) {
+        throw new Error("Category named Others not found");
+    }
+
+    const updatedProducts = await prisma.product.updateMany({
+        where: { categoryId: categoryId },
+        data: { categoryId: othersCategory.id },
+    });
+
+    revalidatePath(`/category/${othersCategory.id}`);
+    updatedProducts.count > 0
+        ? console.log(`${updatedProducts.count} products updated successfully`)
+        : console.log('No products found with the given parentCategoryId')
+
+    return updatedProducts;
+}
+
 export async function createCategory(formData) {
 
     let res = { message: null, targetUrl: null };
@@ -24,23 +46,8 @@ export async function createCategory(formData) {
         createdCategory = newCategory;
 
         // move products in parent to Others if they exist
-        if (parentCategoryId) {
-            const othersCategory = await prisma.category.findUnique({
-                where: { categoryName: "Others" },
-            });
-
-            if (!othersCategory) {
-                throw new Error("Category named Others not found");
-            }
-
-            const updatedProducts = await prisma.product.updateMany({
-                where: { categoryId: parentCategoryId },
-                data: { categoryId: othersCategory.id },
-            });
-
-            updatedProducts.count > 0
-                ? console.log(`${updatedProducts.count} products updated successfully`)
-                : console.log('No products found with the given parentCategoryId')
+        if (parentCategoryId?.length > 0) {
+            const updatedProducts = await moveProductsInCategory(parentCategoryId);
         }
 
         res.targetUrl = `/category/${newCategory.id}`;
@@ -71,20 +78,13 @@ export async function deleteCategory(category) {
 
     try {
         // if it has products, move them to Others
-        const othersCategory = await prisma.category.findUnique({
-            where: { categoryName: "Others" },
-        });
-        const updatedProducts = await prisma.product.updateMany({
-            where: { categoryId: category.id },
-            data: { categoryId: othersCategory.id },
-        });
-        revalidatePath(`/category/${othersCategory.id}`);
+        const updatedProducts = await moveProductsInCategory(category.id);
 
         // if it has children, update their parents to its parent, but this seems to be redundant in current category hierarchy
-        const updatedChildren = await prisma.category.updateMany({
-            where: { parentCategoryId: category.id },
-            data: { parentCategoryId: category.parentCategoryId },
-        });
+        // const updatedChildren = await prisma.category.updateMany({
+        //     where: { parentCategoryId: category.id },
+        //     data: { parentCategoryId: category.parentCategoryId },
+        // });
 
         // delete the category
         const deletedCategory = await prisma.category.delete({
@@ -109,10 +109,17 @@ export async function updateCategory(categoryId, formData) {
     const parentCategoryId = formData.get('parentCategoryId');
 
     try {
+        // update category
         const updatedCategory = await prisma.category.update({
             where: { id: categoryId },
-            data: { categoryName, categoryDescription, labelColor, parentCategoryId },
+            data: { categoryName, categoryDescription, labelColor, parentCategoryId: parentCategoryId.length === 0 ? null : parentCategoryId },
         });
+
+        // move products in new parent to Others if they exist
+        if (parentCategoryId?.length > 0) {
+            const updatedProducts = await moveProductsInCategory(parentCategoryId);
+        }
+
         res.targetUrl = `/category/${categoryId}`
         revalidatePath(res.targetUrl);
     } catch (e) {

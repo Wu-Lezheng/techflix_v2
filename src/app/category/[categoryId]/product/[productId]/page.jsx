@@ -1,8 +1,11 @@
 import MediaSlider from "@/components/media-slider/MediaSlider";
+import EditProductModal from "@/components/modal/edit-product-modal/EditProductModal";
 import ProductFeature from "@/components/product-feature/ProductFeature";
 import ProductSpecs from "@/components/product-specs/ProductSpecs";
 import Topbar from "@/components/topbar/Topbar";
+import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import styles from './page.module.css';
 
@@ -38,7 +41,7 @@ async function getSpecs(productId) {
     return specs;
 }
 
-export default async function CategoryPage({ params }) {
+export default async function ProductPage({ params }) {
 
     const productId = params.productId;
     const product = await prisma.product.findUnique({
@@ -57,11 +60,17 @@ export default async function CategoryPage({ params }) {
     return (
         <div className={styles.container}>
             <Topbar></Topbar>
+
             <MediaSlider product={product} category={category} mediaFiles={mediaFiles}></MediaSlider>
+
             <div className={styles.productLayout}>
                 <div className={styles.productControl}>
                     <button>Add to favourites</button>
-                    <button>Edit</button>
+                    {await isAdmin() && (
+                        <Link href="?edit-product=true">
+                            <button style={{ width: '100%' }}>Edit</button>
+                        </Link>
+                    )}
                     <h4>Tags:</h4>
                     <h4>{`Views: ${product.numberOfViews}`}</h4>
                 </div>
@@ -74,6 +83,8 @@ export default async function CategoryPage({ params }) {
                     {specs.length !== 0 && <ProductSpecs specs={specs}></ProductSpecs>}
                 </div>
             </div>
+
+            <EditProductModal product={product}></EditProductModal>
         </div>
     );
 }

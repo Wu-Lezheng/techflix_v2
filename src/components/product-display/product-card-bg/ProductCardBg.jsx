@@ -1,14 +1,10 @@
-import prisma from "@/lib/prisma";
+"use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { BsBookmarkFill } from "react-icons/bs";
-import styles from "./ProductCardBg.module.css"
+import styles from "./ProductCardBg.module.css";
 
-async function ProductCardBg({ product }) {
-
-    const category = await prisma.category.findUnique({
-        where: { id: product.categoryId },
-    })
+function ProductCardBg({ product, category }) {
 
     let dynamicFontSize = '0.875rem';
 
@@ -16,10 +12,16 @@ async function ProductCardBg({ product }) {
         dynamicFontSize = '0.75rem';
     }
 
+    const router = useRouter();
+    const handleClick = () => {
+        const targetPath = `/category/${product.categoryId}/product/${product.id}`;
+        router.push(targetPath);
+    };
+
     return (
-        <div className={styles.productContainer}>
+        <div className={styles.productContainer} onClick={handleClick}>
             <div className={styles.imageContainer}>
-                <Image src={product.coverImage} alt={product.productName} fill sizes='99vw' quality={100} priority className={styles.thumbnail}></Image>
+                <Image src={product.coverImage} alt={product.productName} width={1920} height={1080} quality={100} priority className={styles.thumbnail} />
             </div>
             <p className={styles.productName}>{product.productName}</p>
             <div className={styles.categorySection} style={{ color: category.labelColor, fontSize: '1rem' }}>

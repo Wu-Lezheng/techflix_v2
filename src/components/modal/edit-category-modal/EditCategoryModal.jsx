@@ -7,7 +7,7 @@ import Modal from "../Modal";
 export default function EditCategoryModal({ category }) {
 
     const searchParams = useSearchParams();
-    const showModal = searchParams.get("edit");
+    const showModal = searchParams.get("edit-category");
 
     return showModal && (
         <Modal>

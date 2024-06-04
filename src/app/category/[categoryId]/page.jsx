@@ -56,13 +56,11 @@ export default async function CategoryPage({ params }) {
                         <h2 className={styles.dataValue}>{products.reduce((total, product) => total + product.numberOfViews, 0)}</h2>
                         <p className={styles.dataName}>Views</p>
                     </div>
-                    {
-                        await isAdmin() && category.categoryName !== "Others" && (
-                            <Link href="?edit=true">
-                                <button className={styles.editButton}>Edit</button>
-                            </Link>
-                        )
-                    }
+                    {await isAdmin() && category.categoryName !== "Others" && (
+                        <Link href="?edit-category=true">
+                            <button className={styles.editButton}>Edit</button>
+                        </Link>
+                    )}
                 </div>
             </div>
 

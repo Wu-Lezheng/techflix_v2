@@ -86,7 +86,7 @@ export default function CategoryForm({ category }) {
                 <select name="parentCategoryId" id="parentCategoryId" defaultValue={category?.parentCategoryId || ''} className='dropdownSelect'>
                     <option key="null-option" value="">No parent</option>
                     {!error && !data?.error &&
-                        data?.categories.filter(category => category.categoryName !== 'Others')
+                        data?.categories.filter(categoryOption => categoryOption.categoryName !== 'Others' && categoryOption.id !== category?.id)
                             .map(categoryOption => (
                                 <option key={categoryOption.id} value={categoryOption.id}>{categoryOption.categoryName}</option>
                             ))}
@@ -99,7 +99,7 @@ export default function CategoryForm({ category }) {
                 <Link href={pathname}>
                     <button>Cancel</button>
                 </Link>
-                {category ? <button onClick={handleDelete}>Delete</button> : <button type='reset'>Reset</button>}
+                {category ? <button onClick={handleDelete} aria-disabled={pending}>Delete</button> : <button type='reset'>Reset</button>}
                 <button type='submit' aria-disabled={pending}>{category ? "Update" : "Create"}</button>
             </div>
 

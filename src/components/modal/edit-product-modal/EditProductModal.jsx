@@ -1,21 +1,20 @@
 "use client";
-import CategoryForm from "@/components/form-groups/category/CategoryForm";
 import ProductForm from "@/components/form-groups/product/ProductForm";
 import TabView from "@/components/tab-view/TabView";
 import { useSearchParams } from "next/navigation";
 import Modal from "../Modal";
 
-export default function AddNewModal() {
+export default function EditProductModal({ product }) {
 
     const searchParams = useSearchParams();
-    const showModal = searchParams.get("add-new");
+    const showModal = searchParams.get("edit-product");
 
     return showModal && (
         <Modal>
-            <TabView titles={["New Category", "New Product"]}>
-                <CategoryForm></CategoryForm>
-                <ProductForm></ProductForm>
+            <TabView titles={[" Edit Product"]}>
+                <ProductForm product={product}></ProductForm>
             </TabView>
         </Modal>
     );
+
 }

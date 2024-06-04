@@ -1,21 +1,37 @@
 .productContainer {
     width: 100%;
+    height: fit-content;
     background-color: var(--bg-t);
     border: none;
     border-radius: 0.875rem;
     padding: 1rem;
+    cursor: pointer;
+    transition: box-shadow 0.35s ease;
+}
+
+.productContainer:hover {
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.4);
 }
 
 .imageContainer {
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
+    border: none;
+    border-radius: 0.625rem;
+    overflow: hidden;
 }
 
 .thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: none;
-    border-radius: 0.625rem;
+    transition: transform 0.35s ease;
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
 }
 
 .productName {
