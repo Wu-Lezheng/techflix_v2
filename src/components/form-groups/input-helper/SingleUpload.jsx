@@ -6,7 +6,7 @@ import RequiredInput from "./RequiredInput";
 
 export default function SingleUpload({ required, title, name, file, setProductData }) {
 
-    const [fileUrl, setFileUrl] = useState(null);
+    const [fileUrl, setFileUrl] = useState(file ? URL.createObjectURL(file) : null);
     const [fileEnter, setFileEnter] = useState(false);
     const inputRef = useRef(null);
 

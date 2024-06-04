@@ -6,10 +6,13 @@ import { useRef, useState } from "react";
 import MediaUploadForNew from "./MediaUploadForNew";
 import ProductEssentialsForNew from "./ProductEssentialsForNew";
 
+const fetcher = (...args) => fetch(...args).then(res => res);
+
 export default function ProductForm({ product }) {
 
     const pathname = usePathname();
     const router = useRouter();
+    // const { data, error } = useSWR(`/api/product/get-files/${product?.id}`, fetcher);
 
     // for form refs
     const formRefs = [useRef(null), useRef(null)];

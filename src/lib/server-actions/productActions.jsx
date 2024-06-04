@@ -143,3 +143,7 @@ export async function deleteProduct(product) {
         return res;
     }
 }
+
+export async function updateProduct() {
+
+}
