@@ -1,4 +1,5 @@
 import ProductCardBg from "@/components/product-display/product-card-bg/ProductCardBg";
+import Topbar from "@/components/topbar/Topbar";
 import { fetchCategoriesForProducts } from "@/lib/helper/categoryHelper";
 import { getUserId } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
@@ -22,7 +23,7 @@ async function findFavouritesByUser(userId) {
 export default async function Favourites() {
 
     const userId = await getUserId();
-    if (userId?.length <= 0) {
+    if (!userId || userId.length <= 0) {
         return (
             // TODO: improve handling of no user
             <div className="container">
@@ -38,6 +39,7 @@ export default async function Favourites() {
 
     return (
         <div className="container">
+            <Topbar></Topbar>
             <h1>My Favourites</h1>
             <div className={styles.likedProducts}>
                 {favouritesWithCategories?.length > 0
@@ -45,7 +47,7 @@ export default async function Favourites() {
                         <ProductCardBg key={product.id} product={product} category={category} />
                     ))
                     // TODO: edit 404
-                    : <p>No recently viewed</p>
+                    : <p>No products in favourites</p>
                 }
             </div>
         </div>

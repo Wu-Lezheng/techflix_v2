@@ -1,38 +1,37 @@
-"use client";
 import { formatDate, formatViews } from '@/lib/helper/formatter';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-import { AiOutlineHeart } from "react-icons/ai";
+import Link from 'next/link';
+
+import LikeButton from '@/components/utils/LikeButton';
+import { checkProductLiked } from '@/lib/helper/productHelper';
 import styles from "./ProductCard.module.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = async ({ product, liked }) => {
 
-    const router = useRouter();
     const formattedDate = formatDate(product.createdAt);
     const formattedViews = formatViews(product.numberOfViews);
 
-    const handleClick = () => {
-        const targetPath = `${product.categoryId}/product/${product.id}`;
-        router.push(targetPath);
-    };
+    if (liked === null || liked === undefined) {
+        liked = await checkProductLiked(product.id);
+    }
 
     return (
-        <div className={styles.productContainer} onClick={handleClick}>
-            <div className={styles.imageContainer}>
-                <Image src={product.coverImage} alt={product.productName} fill sizes='99vw' className={styles.thumbnail} quality={100} priority={true}></Image>
-                <div className={styles.loveButton}>
-                    <AiOutlineHeart size={18} />
+        <Link href={`${product.categoryId}/product/${product.id}`}>
+            <div className={styles.productContainer}>
+                <div className={styles.imageContainer}>
+                    <Image src={product.coverImage} alt={product.productName} fill sizes='99vw' className={styles.thumbnail} quality={100} priority={true}></Image>
+                    <LikeButton productId={product.id} className={styles.likeButton} size={"1.125rem"} liked={liked} />
+                </div>
+                <div className={styles.productInfo}>
+                    <p className={styles.productName}>{product.productName}</p>
+                    <div className={styles.productData}>
+                        <p className={styles.uploadDate}>{formattedDate}</p>
+                        <p className={styles.views}>{`${formattedViews} views`}</p>
+                    </div>
                 </div>
             </div>
-            <div className={styles.productInfo}>
-                <p className={styles.productName}>{product.productName}</p>
-                <div className={styles.productData}>
-                    <p className={styles.uploadDate}>{formattedDate}</p>
-                    <p className={styles.views}>{`${formattedViews} views`}</p>
-                </div>
-            </div>
-        </div>
+        </Link>
     );
 }
 

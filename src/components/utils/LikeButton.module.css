@@ -1,0 +1,17 @@
+.likeIcon {
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+
+.likeIcon:hover {
+    color: var(--accent);
+}
+
+.likeIconActive {
+    color: var(--accent);
+    transition: color 0.3s ease;
+}
+
+.likeIconActive:hover {
+    color: var(--accent-hover)
+}

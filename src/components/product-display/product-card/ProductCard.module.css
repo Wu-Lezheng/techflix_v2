@@ -21,9 +21,8 @@
     cursor: pointer;
 }
 
-.loveButton {
+.likeButton {
     background-color: var(--bg-dark);
-    color: var(--primary);
     display: flex;
     align-items: center;
     position: absolute;
