@@ -1,16 +1,7 @@
 "use server";
+import { fetchCategoriesForProducts } from "@/lib/helper/categoryHelper";
 import ProductCardBg from "../product-display/product-card-bg/ProductCardBg";
 import styles from "./RecentlyViewed.module.css";
-
-async function fetchCategoriesForProducts(products) {
-    const categoryPromises = products.map(async (product) => {
-        const category = await prisma.category.findUnique({
-            where: { id: product.categoryId }
-        });
-        return { product, category };
-    });
-    return Promise.all(categoryPromises);
-}
 
 export default async function RecentlyViewed({ products, count }) {
 
