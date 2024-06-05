@@ -46,7 +46,6 @@ export async function removeFromFavourites(productId) {
         return res;
 
     } catch (e) {
-        console.log(e);
         res.message = "Failed to remove from favourites";
         return res;
     }

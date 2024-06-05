@@ -8,7 +8,6 @@ export async function checkProductLiked(productId) {
                 userId_productId: { userId: userId, productId: productId },
             },
         });
-        console.log(isLiked);
         return isLiked ? true : false;
     } else {
         return false;

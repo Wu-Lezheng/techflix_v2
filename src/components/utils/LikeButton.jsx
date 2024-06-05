@@ -1,31 +1,32 @@
 "use client";
 import { addToFavourites, removeFromFavourites } from "@/lib/server-actions/favouritesActions";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import styles from "./LikeButton.module.css";
 
 export default function LikeButton({ productId, className, size, liked }) {
 
-    const [isLiked, setIsLiked] = useState(liked);
+    const router = useRouter();
 
     async function handleClick(event) {
         event.preventDefault();
         let res;
-        if (!isLiked) {
+        if (!liked) {
             res = await addToFavourites(productId);
         } else {
             res = await removeFromFavourites(productId);
         }
 
         if (res) {
-            setIsLiked(res.result);
+            liked = res.result
+            router.refresh();
         }
     }
 
     return (
-        <div className={`${className} ${isLiked ? styles.likeIconActive : styles.likeIcon}`} onClick={handleClick}>
+        <div className={`${className} ${liked ? styles.likeIconActive : styles.likeIcon}`} onClick={handleClick}>
             {
-                isLiked
+                liked
                     ? <AiFillHeart size={size} />
                     : <AiOutlineHeart size={size} />
             }

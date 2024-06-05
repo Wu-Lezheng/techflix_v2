@@ -4,12 +4,17 @@ import styles from "./Modal.module.css";
 
 export default function Modal({ children }) {
 
+    // TODO: handle scrolling prevention better
     useEffect(() => {
-        document.body.style.overflow = "hidden";
+        // Save the current scroll position
+        const scrollPosition = window.scrollY;
+        // Disable scrolling
+        document.body.style.overflow = 'hidden';
 
-        // Cleanup function to restore scrolling when component unmounts
+        // Cleanup function to restore scrolling and scroll position when component unmounts
         return () => {
-            document.body.style.overflow = "";
+            document.body.style.overflow = '';
+            window.scrollTo(0, scrollPosition);
         };
     }, []);
 

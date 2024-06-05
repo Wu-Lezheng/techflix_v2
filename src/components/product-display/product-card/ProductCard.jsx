@@ -1,10 +1,8 @@
-import { formatDate, formatViews } from '@/lib/helper/formatter';
-import Image from 'next/image';
-
-import Link from 'next/link';
-
 import LikeButton from '@/components/utils/LikeButton';
+import { formatDate, formatViews } from '@/lib/helper/formatter';
 import { checkProductLiked } from '@/lib/helper/productHelper';
+import Image from 'next/image';
+import Link from 'next/link';
 import styles from "./ProductCard.module.css";
 
 const ProductCard = async ({ product, liked }) => {
@@ -20,7 +18,7 @@ const ProductCard = async ({ product, liked }) => {
         <Link href={`${product.categoryId}/product/${product.id}`}>
             <div className={styles.productContainer}>
                 <div className={styles.imageContainer}>
-                    <Image src={product.coverImage} alt={product.productName} fill sizes='99vw' className={styles.thumbnail} quality={100} priority={true}></Image>
+                    <Image src={product.coverImage} alt={product.productName} width={1920} height={1080} className={styles.thumbnail} quality={100} priority={true}></Image>
                     <LikeButton productId={product.id} className={styles.likeButton} size={"1.125rem"} liked={liked} />
                 </div>
                 <div className={styles.productInfo}>

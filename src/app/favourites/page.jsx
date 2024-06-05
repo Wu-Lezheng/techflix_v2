@@ -1,6 +1,5 @@
 import ProductCardBg from "@/components/product-display/product-card-bg/ProductCardBg";
 import Topbar from "@/components/topbar/Topbar";
-import { fetchCategoriesForProducts } from "@/lib/helper/categoryHelper";
 import { getUserId } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 import styles from "./page.module.css";
@@ -27,24 +26,23 @@ export default async function Favourites() {
         return (
             // TODO: improve handling of no user
             <div className="container">
+                <Topbar></Topbar>
+                <h1>My Favourites</h1>
                 You must log in to view your favourite products
             </div>
         );
     }
 
-    const favourites = await findFavouritesByUser(userId);
-    const favouritesWithCategories = favourites?.length > 0
-        ? fetchCategoriesForProducts(favourites)
-        : [];
+    const favouriteProducts = await findFavouritesByUser(userId);
 
     return (
         <div className="container">
             <Topbar></Topbar>
             <h1>My Favourites</h1>
             <div className={styles.likedProducts}>
-                {favouritesWithCategories?.length > 0
-                    ? favouritesWithCategories.map(({ product, category }) => (
-                        <ProductCardBg key={product.id} product={product} category={category} />
+                {Array.isArray(favouriteProducts) && favouriteProducts?.length > 0
+                    ? favouriteProducts.map(product => (
+                        <ProductCardBg key={product.id} product={product} />
                     ))
                     // TODO: edit 404
                     : <p>No products in favourites</p>
