@@ -7,13 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import MediaUploadForNew from "./MediaUploadForNew";
 import ProductEssentialsForNew from "./ProductEssentialsForNew";
 
-const fetcher = (...args) => fetch(...args).then(res => res);
-
-export default function ProductForm({ product }) {
+export default function ProductForm({ product, mediaFiles }) {
 
     const pathname = usePathname();
     const router = useRouter();
-    // const { data, error } = useSWR(`/api/product/get-files/${product?.id}`, fetcher);
 
     // for form refs
     const formRefs = [useRef(null), useRef(null)];
@@ -52,15 +49,34 @@ export default function ProductForm({ product }) {
                 }
                 const blob = await response.blob();
                 const file = new File([blob], filename, { type: blob.type });
-                setProductData({ ...productData, coverImage: file });
+                setProductData(prevData => ({ ...prevData, coverImage: file }));;
 
             } catch (error) {
                 console.log(error);
             }
         }
 
+        async function fetchMediaFiles() {
+            try {
+                const files = await Promise.all(mediaFiles.map(async (mediaFile) => {
+                    const filename = path.basename(mediaFile.filePath);
+                    const response = await fetch(mediaFile.filePath);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const blob = await response.blob();
+                    return new File([blob], filename, { type: blob.type });
+                }));
+
+                setProductData(prevData => ({ ...prevData, mediaFiles: files }));
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
         fetchCover();
-    }, []);
+        fetchMediaFiles();
+    }, [product]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -155,8 +171,12 @@ export default function ProductForm({ product }) {
         <div style={{ display: 'flex', flexDirection: 'column', rowGap: '2.5rem' }}>
             {product
                 ? productData.coverImage !== '' && <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
-                : <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />}
-            <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+                : <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+            }
+            {mediaFiles?.length > 0
+                ? productData.mediaFiles?.length === mediaFiles?.length && <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+                : <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+            }
             {message && <div className="formError" style={{ margin: '0 1.5rem' }}>{message}</div>}
             <div style={{ margin: '0 1.5rem' }}>
                 <Link href={pathname}>

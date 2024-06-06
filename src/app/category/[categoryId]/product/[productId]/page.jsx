@@ -86,7 +86,7 @@ export default async function ProductPage({ params }) {
                 </div>
             </div>
 
-            <EditProductModal product={product}></EditProductModal>
+            <EditProductModal product={product} mediaFiles={mediaFiles}></EditProductModal>
         </div>
     );
 }

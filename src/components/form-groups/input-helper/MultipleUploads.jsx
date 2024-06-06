@@ -2,12 +2,12 @@
 import { useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import MediaPreview from "./MediaPreview";
-import styles from "./MultipleUpload.module.css";
+import styles from "./MultipleUploads.module.css";
 import RequiredInput from "./RequiredInput";
 
 export default function MultipleUploads({ required, title, name, files, setProductData }) {
 
-    const [fileUrls, setFileUrls] = useState([]);
+    const [fileUrls, setFileUrls] = useState(files ? files.map(file => URL.createObjectURL(file)) : []);
     const [fileEnter, setFileEnter] = useState(false);
     const inputRef = useRef(null);
 

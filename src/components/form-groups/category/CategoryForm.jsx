@@ -55,10 +55,10 @@ export default function CategoryForm({ category }) {
         event.preventDefault();
         setPending(true);
         const { message, targetUrl } = await deleteCategory(category);
-        mutate((key) => typeof key === 'string' && key.startsWith('/api/category/get-category'));
         setErrorMessage(message);
         setPending(false);
         if (targetUrl) {
+            await mutate((key) => typeof key === 'string' && key.startsWith('/api/category/get-category'));
             router.push('/home');
         }
     }
