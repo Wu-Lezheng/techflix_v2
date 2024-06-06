@@ -43,10 +43,10 @@ export default function CategoryForm({ category }) {
         setPending(true);
         const data = new FormData(formRef.current);
         const { message, targetUrl } = category ? await updateCategory(category.id, data) : await createCategory(data);
-        mutate((key) => typeof key === 'string' && key.startsWith('/api/category/get-category'));
         setErrorMessage(message);
         setPending(false);
         if (targetUrl) {
+            await mutate((key) => typeof key === 'string' && key.startsWith('/api/category/get-category'));
             router.push(targetUrl);
         }
     }
@@ -59,7 +59,7 @@ export default function CategoryForm({ category }) {
         setErrorMessage(message);
         setPending(false);
         if (targetUrl) {
-            router.push(targetUrl);
+            router.push('/home');
         }
     }
 

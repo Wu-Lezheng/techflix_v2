@@ -18,7 +18,7 @@ const ProductCard = async ({ product, liked }) => {
         <Link href={`${product.categoryId}/product/${product.id}`}>
             <div className={styles.productContainer}>
                 <div className={styles.imageContainer}>
-                    <Image src={product.coverImage} alt={product.productName} width={1920} height={1080} className={styles.thumbnail} quality={100} priority={true}></Image>
+                    <Image src={product.coverImage} alt={product.productName} width={1920} height={1080} className={styles.thumbnail} quality={100} priority></Image>
                     <LikeButton productId={product.id} className={styles.likeButton} size={"1.125rem"} liked={liked} />
                 </div>
                 <div className={styles.productInfo}>

@@ -2,7 +2,8 @@
 import { createProduct, deleteProduct } from "@/lib/server-actions/productActions";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import path from "path";
+import { useEffect, useRef, useState } from "react";
 import MediaUploadForNew from "./MediaUploadForNew";
 import ProductEssentialsForNew from "./ProductEssentialsForNew";
 
@@ -37,6 +38,29 @@ export default function ProductForm({ product }) {
     });
     const [pending, setPending] = useState(false);
     const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+
+        if (!product) return;
+
+        async function fetchCover() {
+            try {
+                const filename = path.basename(product.coverImage);
+                const response = await fetch(product.coverImage);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const blob = await response.blob();
+                const file = new File([blob], filename, { type: blob.type });
+                setProductData({ ...productData, coverImage: file });
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchCover();
+    }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -129,7 +153,9 @@ export default function ProductForm({ product }) {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', rowGap: '2.5rem' }}>
-            <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+            {product
+                ? productData.coverImage !== '' && <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+                : <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />}
             <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
             {message && <div className="formError" style={{ margin: '0 1.5rem' }}>{message}</div>}
             <div style={{ margin: '0 1.5rem' }}>

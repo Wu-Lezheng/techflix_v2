@@ -6,7 +6,6 @@ import Topbar from "@/components/topbar/Topbar";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import styles from './page.module.css';
 
 async function getMediaFiles(productId) {
@@ -49,7 +48,10 @@ export default async function ProductPage({ params }) {
     });
 
     if (!product) {
-        redirect('/not-found');
+        // TODO: add not-found
+        return (
+            <div>Product not found</div>
+        );
     }
 
     const mediaFiles = await getMediaFiles(product.id);

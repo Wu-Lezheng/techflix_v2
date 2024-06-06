@@ -5,7 +5,6 @@ import { formatParagraph } from "@/lib/helper/formatter";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import styles from "./page.module.css";
 
 async function getProducts(categoryId) {
@@ -31,7 +30,10 @@ export default async function CategoryPage({ params }) {
     });
 
     if (!category) {
-        redirect('/not-found');
+        // TODO: add not-found
+        return (
+            <div>Product not found</div>
+        );
     }
 
     const products = await getProducts(categoryId);
@@ -57,7 +59,7 @@ export default async function CategoryPage({ params }) {
                         <p className={styles.dataName}>Views</p>
                     </div>
                     {await isAdmin() && category.categoryName !== "Others" && (
-                        <Link href="?edit-category=true">
+                        <Link href="?edit-category=true" scroll={false}>
                             <button className={styles.editButton}>Edit</button>
                         </Link>
                     )}

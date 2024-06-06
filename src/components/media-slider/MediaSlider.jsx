@@ -66,14 +66,6 @@ export default function MediaSlider({ product, category, mediaFiles }) {
 
 
     // for the first media file, which will always be the cover page
-    const cover = <>
-        <Image src={product.coverImage} alt={product.productName} fill sizes="99vw" priority quality={100} style={{ objectFit: 'cover' }}></Image>
-        <div className={styles.textOverlay}>
-            <p className={styles.productName}>{product.productName}</p>
-            <p className={styles.productData} style={{ color: category.labelColor }}>{`${formatDate(product.createdAt)} | ${category.categoryName}`}</p>
-            <p className={styles.productSummary}>{product.productSummary}</p>
-        </div>
-    </>;
 
     return (
         <div className={styles.mediaSlider}>
@@ -82,7 +74,15 @@ export default function MediaSlider({ product, category, mediaFiles }) {
             <div className={styles.mediaDisplay}>
                 {files.map((file, index) => (
                     index === 0 ? (
-                        <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>{cover}</div>
+                        // cover image
+                        <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>
+                            <Image src={product.coverImage} alt={product.productName} width={1920} height={1080} priority quality={100} style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}></Image>
+                            <div className={styles.textOverlay}>
+                                <p className={styles.productName}>{product.productName}</p>
+                                <p className={styles.productData} style={{ color: category.labelColor }}>{`${formatDate(product.createdAt)} | ${category.categoryName}`}</p>
+                                <p className={styles.productSummary}>{product.productSummary}</p>
+                            </div>
+                        </div>
                     ) : (
                         <div key={index} className={styles.mediaContainer} style={{ translate: `${-100 * currentIndex}%` }}>
                             {

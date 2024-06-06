@@ -8,9 +8,9 @@ export default function MediaPreview({ file, fileUrl, handleClick, width = '75%'
     return (
         <div className={styles.previewContainer} style={{ width: width }}>
             <div className={styles.previewInfo}>
-                <div style={{ position: 'relative', height: '100%', aspectRatio: '16/9' }}>
+                <div className={styles.mediaContainer}>
                     {file.type.startsWith('image/')
-                        ? <Image src={fileUrl} alt={file?.name} fill sizes="99vw" priority className={styles.previewMedia}></Image>
+                        ? <Image src={fileUrl} alt={file?.name} width={1920} height={1080} priority className={styles.previewMedia}></Image>
                         : <>
                             <video width={"100%"} height={"100%"} className={styles.previewMedia}>
                                 <source src={fileUrl} type={file.type} />
@@ -22,8 +22,8 @@ export default function MediaPreview({ file, fileUrl, handleClick, width = '75%'
 
                 </div>
                 <div className={styles.previewData}>
-                    <p>{file?.name}</p>
-                    <p style={{ fontWeight: 'var(--medium)' }}>{formatFileSize(file?.size)}</p>
+                    <p style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{file?.name}</p>
+                    <p style={{ fontWeight: 'var(--medium)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{formatFileSize(file?.size)}</p>
                 </div>
             </div>
             <AiFillDelete color="var(--accent)" size={"1.5rem"} style={{ cursor: 'pointer' }} onClick={handleClick} />

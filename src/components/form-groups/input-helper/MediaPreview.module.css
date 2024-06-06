@@ -3,7 +3,7 @@
     padding: 0.875rem 1.5rem;
     width: 100%;
     max-width: var(--small-screen);
-    aspect-ratio: 7;
+    aspect-ratio: 8.5;
     border: none;
     border-radius: 0.5rem;
     display: flex;
@@ -24,10 +24,21 @@
     overflow: hidden;
 }
 
+.mediaContainer {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
 .previewMedia {
     object-fit: cover;
     border: none;
     border-radius: 0.25rem;
+    width: 100%;
+    height: 100%;
 }
 
 .previewData {
@@ -37,6 +48,7 @@
     flex-direction: column;
     justify-content: space-between;
     font-size: 0.75rem;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {

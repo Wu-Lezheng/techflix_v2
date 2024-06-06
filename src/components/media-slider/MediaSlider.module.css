@@ -69,8 +69,6 @@
 .productName {
     font-size: 3rem;
     font-weight: var(--bold);
-    overflow: hidden;
-    text-overflow: ellipsis;
     transition: font-size 0.25s ease;
 }
 
@@ -129,7 +127,7 @@
 
 .previewContainer {
     position: relative;
-    width: calc((100vw - var(--sidebar-width)) / 6);
+    width: calc((100vw - var(--o-sidebar-width)) / 6);
     min-width: 8rem;
     aspect-ratio: 16/9;
     transition: width 0.25s ease;
