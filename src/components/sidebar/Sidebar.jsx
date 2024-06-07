@@ -1,6 +1,6 @@
 "use client";
 import { useMediaQuery } from "@/lib/helper/mediaQuery";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -101,11 +101,16 @@ export default function Sidebar() {
                 <AddNew></AddNew>
             </motion.div>
 
-            {!isOpen && (
-                <div className={styles.menuButton} onClick={() => setIsOpen(true)}>
-                    <AiOutlineMenu size="1.75rem" />
-                </div>
-            )}
+            <AnimatePresence>
+                {!isOpen && (
+                    <motion.div
+                        className={styles.menuButton} onClick={() => setIsOpen(true)}
+                        initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}
+                    >
+                        <AiOutlineMenu size="1.75rem" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }

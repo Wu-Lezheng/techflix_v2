@@ -1,4 +1,4 @@
-import LikeButton from '@/components/utils/LikeButton';
+import LikeButton from '@/components/utils/like-button/LikeButton';
 import { checkProductLiked } from '@/lib/helper/productHelper';
 import Image from "next/image";
 import Link from "next/link";
