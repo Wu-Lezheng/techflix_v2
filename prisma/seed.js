@@ -146,36 +146,42 @@ async function main() {
     // create media files
     const files = [
         {
+            id: 'drone_1',
             fileName: 'drone_1.jpg',
             filePath: '/images/drone_1.jpg',
             mediaType: MediaType.IMAGE,
             productId: droneSurveillance.id,
         },
         {
+            id: 'drone_2',
             fileName: 'drone_2.jpg',
             filePath: '/images/drone_2.jpg',
             mediaType: MediaType.IMAGE,
             productId: droneSurveillance.id,
         },
         {
+            id: 'drone_3',
             fileName: 'drone_3.png',
             filePath: '/images/drone_3.png',
             mediaType: MediaType.IMAGE,
             productId: droneSurveillance.id,
         },
         {
+            id: 'drone_4',
             fileName: 'drone_4.png',
             filePath: '/images/drone_4.png',
             mediaType: MediaType.IMAGE,
             productId: droneSurveillance.id,
         },
         {
+            id: 'drone_5',
             fileName: 'drone_5.jpg',
             filePath: '/images/drone_5.jpg',
             mediaType: MediaType.IMAGE,
             productId: droneSurveillance.id,
         },
         {
+            id: 'drone_6',
             fileName: 'drone_6.mp4',
             filePath: '/videos/drone_6.mp4',
             mediaType: MediaType.VIDEO,

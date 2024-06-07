@@ -26,9 +26,7 @@ export async function createProduct(formData) {
         coverImagePath = fullFilePath;
 
         createdProduct = await prisma.product.create({
-            data: {
-                productName, productSummary, coverImage: fileUrl, categoryId
-            }
+            data: { productName, productSummary, coverImage: fileUrl, categoryId }
         });
 
         // create product media files
@@ -65,7 +63,7 @@ export async function createProduct(formData) {
 
 }
 
-async function uploadFile(file, targetPath) {
+async function uploadFile(file, targetPath, uploadName) {
     // TODO: need to change how the file is uploaded (e.g. might just call some APIs), since this is only a localhost solution
     const fileExtension = getFileExtension(file.name);
     const buffer = Buffer.from(await file.arrayBuffer());
@@ -115,7 +113,7 @@ async function uploadMediaFiles(mediaFiles, productId) {
 
 export async function deleteProduct(product) {
     let res = { message: null, redirectPath: null };
-    let categoryId = product.categoryId;
+    const categoryId = product.categoryId;
 
     try {
         // get all file paths
@@ -144,6 +142,57 @@ export async function deleteProduct(product) {
     }
 }
 
-export async function updateProduct() {
+export async function updateProduct(product, formData) {
 
+    let res = { message: null, redirectPath: null };
+    const oldCover = product.coverImage;
+    const oldCategoryId = product.categoryId;
+
+    const productName = formData.get('productName');
+    const productSummary = formData.get('productSummary');
+    const categoryId = formData.get('categoryId');
+    const coverImage = formData.get('coverImage');
+
+    const mediaFiles = formData.getAll("mediaFiles");
+
+    // TODO: change how file upload and deletion are handleed in the case of remote
+    try {
+
+        // upload the new cover image
+        const { fileUrl, fullFilePath } = await uploadFile(coverImage, "/cover-images/");
+        // update the product record
+        const updatedProduct = await prisma.product.update({
+            where: { id: product.id },
+            data: { productName, productSummary, coverImage: fileUrl, categoryId: categoryId }
+        });
+        // delete the old cover image 
+        await deleteFile(path.join(process.cwd(), "public" + oldCover));
+
+        // find the relative paths of all old files
+        const oldMediaPaths = await prisma.mediaFile.findMany({
+            where: { productId: product.id },
+            select: { filePath: true }
+        });
+        // delete all media file records in the database
+        const deleteCount = await prisma.mediaFile.deleteMany({
+            where: { productId: product.id }
+        });
+        // delete all the media files in the storage
+        await Promise.all(oldMediaPaths.map(async ({ filePath }) => {
+            const fullPath = path.join(process.cwd(), "public" + filePath);
+            await deleteFile(fullPath);
+        }))
+        // upload new media files
+        if (mediaFiles?.length > 0) {
+            const mediaFilePaths = await uploadMediaFiles(mediaFiles, product.id);
+        }
+
+        res.redirectPath = categoryId === oldCategoryId ? `/category/${oldCategoryId}/product/${product.id}` : `/category/${categoryId}`;
+
+    } catch (e) {
+        // TODO: restore to the original data if the update fails
+        res.message = e.message;
+    } finally {
+        return res;
+    }
 }

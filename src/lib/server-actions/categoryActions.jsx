@@ -123,6 +123,7 @@ export async function updateCategory(categoryId, formData) {
         res.targetUrl = `/category/${categoryId}`
         revalidatePath(res.targetUrl);
     } catch (e) {
+        //TODO: restore to the original category?
         res.message = e.message;
     } finally {
         return res;

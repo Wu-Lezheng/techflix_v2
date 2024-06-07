@@ -10,7 +10,7 @@ export default function MediaPreview({ file, fileUrl, handleClick, width = '75%'
             <div className={styles.previewInfo}>
                 <div className={styles.mediaContainer}>
                     {file.type.startsWith('image/')
-                        ? <Image src={fileUrl} alt={file?.name} width={1920} height={1080} priority className={styles.previewMedia}></Image>
+                        ? <Image src={fileUrl} alt={file?.name} width={1920} height={1080} priority quality={50} className={styles.previewMedia}></Image>
                         : <>
                             <video width={"100%"} height={"100%"} className={styles.previewMedia}>
                                 <source src={fileUrl} type={file.type} />

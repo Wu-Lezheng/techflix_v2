@@ -1,5 +1,5 @@
 "use client";
-import { createProduct, deleteProduct } from "@/lib/server-actions/productActions";
+import { createProduct, deleteProduct, updateProduct } from "@/lib/server-actions/productActions";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import path from "path";
@@ -33,7 +33,7 @@ export default function ProductForm({ product, mediaFiles }) {
         specifications: [],
         features: []
     });
-    const [pending, setPending] = useState(false);
+    const [pending, setPending] = useState(product ? true : false);
     const [message, setMessage] = useState(null);
 
     useEffect(() => {
@@ -57,26 +57,31 @@ export default function ProductForm({ product, mediaFiles }) {
         }
 
         async function fetchMediaFiles() {
-            try {
-                const files = await Promise.all(mediaFiles.map(async (mediaFile) => {
+            const files = await Promise.all(mediaFiles.map(async (mediaFile) => {
+                try {
                     const filename = path.basename(mediaFile.filePath);
                     const response = await fetch(mediaFile.filePath);
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error(`Failed to fetch ${mediaFile.filePath}`);
                     }
                     const blob = await response.blob();
                     return new File([blob], filename, { type: blob.type });
-                }));
+                } catch (error) {
+                    console.log(`Error fetching ${mediaFile.filePath}: ${error.message}`);
+                    return;
+                }
+            }));
 
-                setProductData(prevData => ({ ...prevData, mediaFiles: files }));
-            } catch (error) {
-                console.log(error);
-            }
+            setProductData(prevData => ({ ...prevData, mediaFiles: files }));
         }
 
-        fetchCover();
-        fetchMediaFiles();
-    }, [product]);
+        async function initialise() {
+            await Promise.all([fetchCover(), fetchMediaFiles()]);
+            setPending(false);
+        }
+
+        initialise();
+    }, [product, mediaFiles]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -157,7 +162,7 @@ export default function ProductForm({ product, mediaFiles }) {
             }
         });
 
-        const { message, redirectPath } = await createProduct(formData);
+        const { message, redirectPath } = product ? await updateProduct(product, formData) : await createProduct(formData);
         setPending(false);
         setMessage(message);
         if (redirectPath) {
@@ -169,25 +174,31 @@ export default function ProductForm({ product, mediaFiles }) {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', rowGap: '2.5rem' }}>
+
             {product
-                ? productData.coverImage !== '' && <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
-                : <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+                ? !pending && <>
+                    <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+                    <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+                </>
+                : <>
+                    <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+                    <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+                </>
             }
-            {mediaFiles?.length > 0
-                ? productData.mediaFiles?.length === mediaFiles?.length && <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
-                : <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
-            }
+
             {message && <div className="formError" style={{ margin: '0 1.5rem' }}>{message}</div>}
+
             <div style={{ margin: '0 1.5rem' }}>
                 <Link href={pathname}>
-                    <button>Cancel</button>
+                    <button aria-disabled={pending}>Cancel</button>
                 </Link>
                 {product
                     ? <button onClick={handleDelete} aria-disabled={pending}>Delete</button>
                     : <button type='reset' onClick={handleReset} >Reset</button>
                 }
-                <button type='submit' onClick={handleSubmit} aria-disabled={pending}>Create</button>
+                <button type='submit' onClick={handleSubmit} aria-disabled={pending}>{product ? "Update" : "Create"}</button>
             </div>
+
         </div>
     );
 }
