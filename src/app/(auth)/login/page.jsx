@@ -1,7 +1,9 @@
 "use client";
+import RequiredInput from "@/components/form-groups/input-helper/RequiredInput";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import styles from "./page.module.css";
 
 export default function LoginPage(props) {
@@ -32,40 +34,41 @@ export default function LoginPage(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={styles.loginForm}>
-            <label className={styles.loginLabel}>
-                <p>Email:</p>
-                <input
-                    name="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className={styles.loginInput}
-                    autoComplete="username"
-                />
-            </label>
-            <label className={styles.loginLabel}>
-                <p>Password:</p>
-                <div className={styles.passwordContainer}>
+        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <form onSubmit={handleSubmit} className={styles.loginForm}>
+
+                <h2 style={{ marginBottom: '1rem' }}>Welcome to Techflix</h2>
+
+                <div className='normalInput' style={{ width: '100%' }}>
+                    <RequiredInput required labelFor={"email"}>Email</RequiredInput>
                     <input
-                        name="password"
-                        type={passwordVisibility ? 'text' : 'password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        className={styles.loginInput}
-                        autoComplete="current-password"
+                        name="email" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                        required className='textField' autoComplete="username" style={{ width: '100%' }}
                     />
-                    <button type="button" onClick={() => setPasswordVisibility(!passwordVisibility)} className={styles.toggleButton}>
-                        {passwordVisibility ? "hide" : "show"}
-                    </button>
                 </div>
-            </label>
-            <div className={styles.message} style={{ display: message ? 'block' : 'none' }}>
-                {message}
-            </div>
-            <button type="submit" className={styles.loginButton}>Submit</button>
-        </form>
+
+                <div className='normalInput' style={{ width: '100%' }}>
+                    <RequiredInput required labelFor={"password"}>Password</RequiredInput>
+                    <div className={styles.passwordContainer}>
+                        <input
+                            name="password" id="password" type={passwordVisibility ? 'text' : 'password'} value={password}
+                            onChange={(e) => setPassword(e.target.value)} required
+                            className='textField' autoComplete="current-password" style={{ width: '100%' }}
+                        />
+                        <div onClick={() => setPasswordVisibility(!passwordVisibility)} className={styles.toggleButton}>
+                            {passwordVisibility
+                                ? <AiFillEyeInvisible />
+                                : <AiFillEye />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div className="formError" style={{ display: message ? 'block' : 'none' }}>
+                    {message}
+                </div>
+                <button type="submit" className={styles.loginButton}>Sign In</button>
+            </form>
+        </div>
     );
 }

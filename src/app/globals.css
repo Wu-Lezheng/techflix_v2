@@ -88,6 +88,7 @@ button {
   color: var(--primary);
   cursor: pointer;
   font-weight: var(--medium);
+  font-family: '__Inter_aaf875', '__Inter_Fallback_aaf875';
   transition: background-color 0.2s ease
 }
 

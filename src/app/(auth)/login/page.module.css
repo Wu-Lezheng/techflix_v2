@@ -3,19 +3,22 @@
     flex-direction: column;
     align-items: flex-start;
     row-gap: 1.5rem;
-}
 
-.loginLabel {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: center;
-    row-gap: 0.5rem;
-}
+    padding: 3.5rem 5rem 4.5rem 5rem;
+    background-color: var(--bg-t);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.125rem;
+    font-weight: var(--semi-bold);
 
-.loginInput {
-    width: 100%;
-    padding: 8px 60px 8px 8px;
+    width: 30%;
+    min-width: calc(var(--mobile-screen) - 2rem);
+    max-width: var(--medium-screen);
+
+    position: absolute;
+    right: 25%;
+    top: 50%;
+    transform: translate(50%, 50%);
 }
 
 .passwordContainer {
@@ -25,27 +28,25 @@
 
 .toggleButton {
     position: absolute;
-    right: 10px;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    align-items: center;
     margin: auto;
     height: fit-content;
+    color: var(--secondary);
+    transition: color 0.25s ease;
 }
 
-.message {}
+.toggleButton:hover {
+    color: var(--primary);
+}
 
 .loginButton {
     width: 100%;
     padding: 10px;
     margin-top: 20px;
-    color: var(--primary);
-    cursor: pointer;
-}
-
-.loginButton:hover {
-    background-color: var(--accent-hover);
-}
-
-.loginButton:active {
-    background-color: var(--accent-click);
+    font-size: 1.125rem;
+    font-weight: var(--semi-bold);
 }

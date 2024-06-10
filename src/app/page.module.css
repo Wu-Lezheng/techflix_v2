@@ -1,7 +1,9 @@
 .contentContainer {
-  margin-left: 8rem;
-  margin-right: 8rem;
-  margin-top: 12rem;
+  padding: 12rem 8rem 6rem 8rem;
+  transition: padding 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10rem;
 }
 
 .titleSection {
@@ -9,6 +11,7 @@
   flex-direction: column;
   row-gap: 2rem;
   max-width: 50%;
+  transition: max-width 0.25s ease;
 }
 
 .highlightedName {
@@ -25,19 +28,19 @@
 }
 
 .gradientButton {
-  max-width: 9rem;
   min-width: 6rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  margin-top: 0.75rem;
+  padding: 1.125rem 1.75rem;
+  font-size: 1.125rem;
+  font-weight: var(--semi-bold);
   background-image: linear-gradient(to right, #b20101, #da0101);
 }
 
 .introSection {
-  margin-top: 10rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  column-gap: 14rem;
+  column-gap: 6rem;
 }
 
 .aboutSection {
@@ -67,4 +70,22 @@
   color: var(--subdued-text);
   margin-top: 2rem;
   margin-bottom: 1.75rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .titleSection {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contentContainer {
+    padding: 12rem 4rem 6rem 4rem;
+  }
+
+  .introSection {
+    flex-direction: column;
+    row-gap: 2rem;
+    column-gap: 0;
+  }
 }

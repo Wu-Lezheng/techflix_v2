@@ -1,13 +1,12 @@
 .featureSection {
-    margin-top: 8rem;
     width: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    row-gap: 2rem;
-    column-gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 22.5rem));
+    gap: 5rem 3rem;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
 }
 
 .featureSection:hover>.glowContainer>.containerBorder {
@@ -16,12 +15,11 @@
 
 .glowContainer {
     position: relative;
-    overflow: hidden;
-    width: 25%;
+    width: 100%;
     aspect-ratio: 1;
-    text-align: center;
     border-radius: 1rem;
     background-color: rgb(255, 255, 255, 0.1);
+    transition: height 0.25s ease;
 }
 
 .glowContainer:hover::before {
@@ -53,11 +51,33 @@
 }
 
 .glowContainer>.featureContent {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: center;
+    text-align: center;
     height: calc(100% - 2px);
     width: calc(100% - 2px);
+    padding: 2rem 1.5rem;
     border-radius: inherit;
     margin: 1px;
     background-color: hsl(228, 6%, 18%);
     position: relative;
     z-index: 2;
+}
+
+@media screen and (max-width: 1024px) {
+    .featureSection {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .glowContainer {
+        aspect-ratio: auto;
+        height: fit-content;
+    }
+
+    .glowContainer>.featureContent {
+        padding: 2rem 3rem;
+    }
 }
