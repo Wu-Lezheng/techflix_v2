@@ -1,7 +1,7 @@
 .featureSection {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(18.5rem, 22rem));
+    grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
     gap: 5rem 3rem;
     justify-content: space-evenly;
     justify-items: center;
@@ -16,7 +16,7 @@
 .glowContainer {
     position: relative;
     width: 100%;
-    aspect-ratio: 0.9;
+    height: 100%;
     border-radius: 1rem;
     background-color: rgb(255, 255, 255, 0.1);
     transition: height 0.25s ease;
@@ -54,6 +54,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+    justify-content: center;
     align-items: center;
     text-align: center;
     height: calc(100% - 2px);
@@ -61,7 +62,7 @@
     padding: 2rem 2rem;
     border-radius: inherit;
     margin: 1px;
-    background-color: hsl(228, 6%, 18%);
+    background-color: hsl(230, 7%, 18%, 0.8);
     position: relative;
     z-index: 2;
 }

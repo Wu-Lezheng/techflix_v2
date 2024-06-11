@@ -14,7 +14,9 @@ export default async function Landing() {
 
       <LandingTop></LandingTop>
 
-      <div className={styles.contentContainer}>
+      <div className={styles.bgImage}>
+
+        <div className={styles.borderShadow}></div>
 
         <div className={styles.titleSection}>
           <h1>Discover Tomorrow. Explore Tech Wonders with <span className={styles.highlightedName}>Techflix</span> </h1>
@@ -30,10 +32,13 @@ export default async function Landing() {
           <h2 style={{ minWidth: "20%" }}>Introduction To Techflix</h2>
           <p className={styles.description}>Techflix is a website for ST Engineering to showcase products and demos under various categories,
             offering enthusiasts and industry professionals alike the opportunity to explore, interact, and envision the future.
-            Join us as we embrace the forefront of innovation. Embark on a voyage of exploration, empowerment, and endless fascination.</p>
+            Join us as we embrace the forefront of innovation. Embark on a voyage of exploration, empowerment, and endless fascination.
+          </p>
         </div>
 
-        <CompanyHighlight></CompanyHighlight>
+        <div className={styles.companyHighlightContent}>
+          <CompanyHighlight></CompanyHighlight>
+        </div>
 
       </div>
 

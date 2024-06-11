@@ -28,13 +28,15 @@ export default function LoginPage(props) {
         });
         if (!res?.error) {
             router.push(callbackUrl ? callbackUrl : "/home");
+            router.refresh();
         } else {
             setMessage('Authentication failed. Check if you are using the correct email and if the password matches the provided email.');
         }
     }
 
     return (
-        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <div className={styles.loginBg}>
+
             <form onSubmit={handleSubmit} className={styles.loginForm}>
 
                 <h2 style={{ marginBottom: '1rem' }}>Welcome to Techflix</h2>
@@ -43,7 +45,7 @@ export default function LoginPage(props) {
                     <RequiredInput required labelFor={"email"}>Email</RequiredInput>
                     <input
                         name="email" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                        required className='textField' autoComplete="username" style={{ width: '100%' }}
+                        required className='textField' autoComplete="username" style={{ width: '100%', maxWidth: 'none' }}
                     />
                 </div>
 
@@ -53,7 +55,7 @@ export default function LoginPage(props) {
                         <input
                             name="password" id="password" type={passwordVisibility ? 'text' : 'password'} value={password}
                             onChange={(e) => setPassword(e.target.value)} required
-                            className='textField' autoComplete="current-password" style={{ width: '100%' }}
+                            className='textField' autoComplete="current-password" style={{ width: '100%', maxWidth: 'none' }}
                         />
                         <div onClick={() => setPasswordVisibility(!passwordVisibility)} className={styles.toggleButton}>
                             {passwordVisibility
