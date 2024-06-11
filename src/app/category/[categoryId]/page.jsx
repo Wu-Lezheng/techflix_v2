@@ -1,6 +1,7 @@
 import EditCategoryModal from "@/components/modal/edit-category-modal/EditCategoryModal";
 import ProductCard from "@/components/product-display/product-card/ProductCard";
 import Topbar from "@/components/topbar/Topbar";
+import { SortSection } from "@/components/utils/sort-buttons/SortButtons";
 import { formatParagraph } from "@/lib/helper/formatter";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
@@ -11,16 +12,11 @@ async function getProducts(categoryId) {
 
     const products = await prisma.product.findMany({
         where: { categoryId: categoryId },
+        orderBy: { productName: 'asc' },
     });
 
     return products;
 }
-
-const SortButton = ({ buttonName, sortFunction }) => {
-    return (
-        <button className={styles.sortButton} onClick={sortFunction}>{buttonName}</button>
-    );
-};
 
 export default async function CategoryPage({ params }) {
 
@@ -36,7 +32,7 @@ export default async function CategoryPage({ params }) {
         );
     }
 
-    const products = await getProducts(categoryId);
+    let products = await getProducts(categoryId);
 
     return (
         <div className="container">
@@ -68,14 +64,7 @@ export default async function CategoryPage({ params }) {
 
             <hr className="gradientDivider" />
 
-            <div className={styles.sortSection}>
-                <h2 style={{ fontSize: '1.25rem' }}>Sort by</h2>
-                <div className={styles.buttonGroup}>
-                    <SortButton buttonName='Name'></SortButton>
-                    <SortButton buttonName='Upload Date'></SortButton>
-                    <SortButton buttonName='Views'></SortButton>
-                </div>
-            </div>
+            <SortSection categoryId={categoryId} products={products}></SortSection>
 
             <div className={styles.productCards}>
                 {

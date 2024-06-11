@@ -110,6 +110,7 @@ async function main() {
         {
             productName: "Mongolian Police E-Staging",
             productSummary: "Mongolian Police E-Staging is a robust Android application designed to modernize and enhance the operational efficiency of the Mongolian police force. With its user-friendly interface and powerful features, our app enables police personnel to effectively manage operations, generate detailed reports, and respond swiftly to incidents. It's an essential tool for resource management and emergency response coordination in the digital age.",
+            numberOfViews: 248,
             coverImage: "/cover-images/e_staging.png",
             categoryId: ersCategory.id,
         }

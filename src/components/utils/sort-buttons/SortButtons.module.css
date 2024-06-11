@@ -1,0 +1,31 @@
+/*for the sort sections*/
+.sortSection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 4rem;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+}
+
+.sortButton {
+    background-color: var(--button-secondary);
+    color: var(--secondary);
+
+}
+
+.editButton:hover,
+.sortButton:hover {
+    background-color: var(--button-secondary-hover);
+}
+
+.editButton:active,
+.sortButton:active {
+    background-color: var(--button-secondary-click);
+    color: var(--primary);
+}
