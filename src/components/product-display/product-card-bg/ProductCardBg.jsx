@@ -1,5 +1,4 @@
 import LikeButton from '@/components/utils/like-button/LikeButton';
-import { checkProductLiked } from '@/lib/helper/productHelper';
 import Image from "next/image";
 import Link from "next/link";
 import { BsBookmarkFill } from "react-icons/bs";
@@ -16,8 +15,6 @@ export default async function ProductCardBg({ product }) {
         dynamicFontSize = '0.75rem';
     }
 
-    const liked = await checkProductLiked(product.id);
-
     return (
         <Link href={`/category/${product.categoryId}/product/${product.id}`}>
             <div className={styles.productContainer}>
@@ -26,7 +23,7 @@ export default async function ProductCardBg({ product }) {
                 </div>
                 <div className={styles.productName}>
                     <p style={{ fontSize: product.productName.length > 20 ? '1rem' : '1.125rem' }}>{product.productName}</p>
-                    <LikeButton productId={product.id} className={styles.likeButton} size={"1.125rem"} liked={liked} />
+                    <LikeButton productId={product.id} className={styles.likeButton} size={"1.125rem"} />
                 </div>
                 <div className={styles.categorySection} style={{ color: category.labelColor, fontSize: '1rem' }}>
                     <BsBookmarkFill style={{ display: 'block' }} />
