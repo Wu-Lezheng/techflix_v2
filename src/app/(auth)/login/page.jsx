@@ -66,7 +66,7 @@ export default function LoginPage(props) {
                     </div>
                 </div>
 
-                <div className="formError" style={{ display: message ? 'block' : 'none' }}>
+                <div className="formError" style={{ display: message ? 'block' : 'none', width: '100%' }}>
                     {message}
                 </div>
                 <button type="submit" className={styles.loginButton}>Sign In</button>
