@@ -1,0 +1,23 @@
+.categoryCard {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+    align-items: center;
+
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: var(--element-active);
+    transition: box-shadow 0.25s ease;
+}
+
+.categoryCard:hover {
+    box-shadow: 0 0.5rem 0.875rem 0 rgba(0, 0, 0, 0.5);
+}
+
+.categoryName {
+    color: var(--primary);
+    font-weight: var(--semi-bold);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
