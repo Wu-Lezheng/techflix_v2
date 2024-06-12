@@ -95,12 +95,14 @@ export default function CategoryForm({ category }) {
 
             {errorMessage && <div className="formError">{errorMessage}</div>}
 
-            <div>
+            <div className="formButtonGroup">
                 <Link href={pathname}>
-                    <button>Cancel</button>
+                    <button className="formButton" style={{ fontWeight: 'var(--medium)' }}>Cancel</button>
                 </Link>
-                {category ? <button onClick={handleDelete} aria-disabled={pending}>Delete</button> : <button type='reset'>Reset</button>}
-                <button type='submit' aria-disabled={pending}>{category ? "Update" : "Create"}</button>
+                {category
+                    ? <button onClick={handleDelete} aria-disabled={pending} className="formButton">Delete</button>
+                    : <button type='reset' className="formButton">Reset</button>}
+                <button type='submit' aria-disabled={pending} className="formButton">{category ? "Update" : "Create"}</button>
             </div>
 
         </form>

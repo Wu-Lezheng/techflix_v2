@@ -188,15 +188,15 @@ export default function ProductForm({ product, mediaFiles }) {
 
             {message && <div className="formError" style={{ margin: '0 1.5rem' }}>{message}</div>}
 
-            <div style={{ margin: '0 1.5rem' }}>
+            <div className="formButtonGroup" style={{ margin: '0 1.5rem' }}>
                 <Link href={pathname}>
-                    <button aria-disabled={pending}>Cancel</button>
+                    <button aria-disabled={pending} className="formButton" style={{ fontWeight: 'var(--medium)' }}>Cancel</button>
                 </Link>
                 {product
-                    ? <button onClick={handleDelete} aria-disabled={pending}>Delete</button>
-                    : <button type='reset' onClick={handleReset} >Reset</button>
+                    ? <button onClick={handleDelete} aria-disabled={pending} className="formButton">Delete</button>
+                    : <button type='reset' onClick={handleReset} className="formButton">Reset</button>
                 }
-                <button type='submit' onClick={handleSubmit} aria-disabled={pending}>{product ? "Update" : "Create"}</button>
+                <button type='submit' onClick={handleSubmit} aria-disabled={pending} className="formButton">{product ? "Update" : "Create"}</button>
             </div>
 
         </div>

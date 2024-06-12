@@ -54,6 +54,15 @@
     margin-left: 1rem;
     border-radius: 0.5rem;
     background-color: var(--button-secondary);
+    transition: background-color 0.25s ease;
+}
+
+.editButton:hover {
+    background-color: var(--button-secondary-hover);
+}
+
+.editButton:active {
+    background-color: var(--button-secondary-click);
 }
 
 /*for the products sections*/
