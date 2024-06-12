@@ -23,7 +23,7 @@ export default async function Landing() {
           <p className={styles.description}> Dive into a realm where cutting-edge ST Engineering products, ranging from smart city & digital solutions to defence & public safety technologies,
             converge to redefine the boundaries of possibility.
           </p>
-          <Link href="/home">
+          <Link href="/home" style={{ width: 'fit-content' }}>
             <button className={styles.gradientButton}>Get Started</button>
           </Link>
         </div>
