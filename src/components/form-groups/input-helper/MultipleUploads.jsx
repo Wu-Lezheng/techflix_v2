@@ -27,7 +27,7 @@ export default function MultipleUploads({ required, title, name, files, setProdu
     }
 
     const handleFileChange = (e) => {
-        event.preventDefault();
+        e.preventDefault();
         if (e.target.files && e.target.files[0]) {
             for (let i = 0; i < e.target.files["length"]; i++) {
                 const file = e.target.files[i];

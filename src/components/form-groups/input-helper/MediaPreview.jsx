@@ -12,8 +12,7 @@ export default function MediaPreview({ file, fileUrl, handleClick, width = '75%'
                     {file.type.startsWith('image/')
                         ? <Image src={fileUrl} alt={file?.name} width={1920} height={1080} priority quality={50} className={styles.previewMedia}></Image>
                         : <>
-                            <video width={"100%"} height={"100%"} className={styles.previewMedia}>
-                                <source src={fileUrl} type={file.type} />
+                            <video src={fileUrl} width={"100%"} height={"100%"} className={styles.previewMedia}>
                                 Your browser does not support the video tag.
                             </video>
                             <AiFillPlayCircle color="var(--primary)" size={"2rem"} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
