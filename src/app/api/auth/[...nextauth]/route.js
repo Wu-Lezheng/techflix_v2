@@ -42,6 +42,7 @@ export const authOptions = {
                     id: user.id,
                     email: user.email,
                     name: user.username,
+                    image: user.profilePic,
                     isAdmin: user.isAdmin,
                     randomKey: createId(),
                 }

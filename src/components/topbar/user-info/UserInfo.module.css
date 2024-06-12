@@ -6,6 +6,12 @@
     column-gap: 1.25rem;
 }
 
+@media screen and (max-width: 768px) {
+    .infoContainer {
+        column-gap: 1rem;
+    }
+}
+
 .userText {
     display: flex;
     flex-direction: column;

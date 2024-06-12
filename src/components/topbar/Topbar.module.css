@@ -9,5 +9,11 @@
     justify-content: flex-end;
     align-items: center;
     column-gap: 2.5rem;
-    padding: 0 var(--padding-hr) 0 var(--padding-hr);
+    padding: 0 var(--padding-hr) 0 calc(var(--padding-hr) + 1rem);
+}
+
+@media screen and (max-width: 768px) {
+    .topbarContainer {
+        column-gap: 1.5rem;
+    }
 }

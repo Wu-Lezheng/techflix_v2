@@ -1,6 +1,5 @@
 import EditCategoryModal from "@/components/modal/edit-category-modal/EditCategoryModal";
 import ProductCard from "@/components/product-display/product-card/ProductCard";
-import Topbar from "@/components/topbar/Topbar";
 import { SortSection } from "@/components/utils/sort-buttons/SortButtons";
 import { formatParagraph } from "@/lib/helper/formatter";
 import { isAdmin } from "@/lib/helper/userHelper";
@@ -36,7 +35,6 @@ export default async function CategoryPage({ params }) {
 
     return (
         <div className="container">
-            <Topbar></Topbar>
 
             <div className={styles.summary}>
                 <div className={styles.info}>

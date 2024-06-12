@@ -1,6 +1,7 @@
 'use client';
 
 import Sidebar from '@/components/sidebar/Sidebar';
+import Topbar from '@/components/topbar/Topbar';
 import { SessionProvider } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 
@@ -12,6 +13,7 @@ export const Providers = ({ children }) => {
     return (
         <SessionProvider>
             {shouldRender && <Sidebar />}
+            {shouldRender && <Topbar />}
             {children}
         </SessionProvider>
     )

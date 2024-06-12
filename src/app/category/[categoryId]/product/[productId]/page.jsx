@@ -2,7 +2,6 @@ import MediaSlider from "@/components/media-slider/MediaSlider";
 import EditProductModal from "@/components/modal/edit-product-modal/EditProductModal";
 import ProductFeature from "@/components/product-feature/ProductFeature";
 import ProductSpecs from "@/components/product-specs/ProductSpecs";
-import Topbar from "@/components/topbar/Topbar";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -61,7 +60,6 @@ export default async function ProductPage({ params }) {
 
     return (
         <div className={styles.container}>
-            <Topbar></Topbar>
 
             <MediaSlider product={product} category={category} mediaFiles={mediaFiles}></MediaSlider>
 

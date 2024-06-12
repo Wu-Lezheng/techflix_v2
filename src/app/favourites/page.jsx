@@ -37,7 +37,6 @@ export default async function Favourites() {
 
     return (
         <div className="container">
-            <Topbar></Topbar>
             <h1>My Favourites</h1>
             <div className={styles.likedProducts}>
                 {Array.isArray(favouriteProducts) && favouriteProducts?.length > 0
