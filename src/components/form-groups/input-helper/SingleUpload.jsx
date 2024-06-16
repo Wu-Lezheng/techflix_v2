@@ -8,7 +8,7 @@ export default function SingleUpload({ required, title, name, file, setProductDa
 
     const [fileUrl, setFileUrl] = useState(file ? URL.createObjectURL(file) : null);
     const [fileEnter, setFileEnter] = useState(false);
-    const inputRef = useRef(null);
+    const inputRef = useRef(file);
 
     function setFile(file) {
         setProductData(prevState => ({
@@ -64,32 +64,34 @@ export default function SingleUpload({ required, title, name, file, setProductDa
 
     return (
         <div className='normalInput'>
-            <RequiredInput labelFor={name} required={required}>{title}</RequiredInput>
-            <div
-                onDragOver={(e) => {
-                    e.preventDefault();
-                    setFileEnter(true);
-                }}
-                onDragLeave={(e) => {
-                    e.preventDefault();
-                    setFileEnter(false);
-                }}
-                onDragEnd={(e) => {
-                    e.preventDefault();
-                    setFileEnter(false);
-                }}
-                onDrop={handleDrop}
-                className="fileUpload"
-                style={{ display: file && file !== '' && "none", borderColor: fileEnter && 'var(--accent-hover)' }}
-            >
-                <AiOutlineCloudUpload color="var(--accent)" size={"4rem"} />
-                <p className="fileUploadText">Drop your file into the box or {" "}
-                    <span className="fileBrowse" onClick={openFileExplorer}>browse</span>
-                </p>
-                <input ref={inputRef} type="file" name={name} id={name} accept="image/*"
-                    required={required} onChange={handleFileChange} style={{ display: "none" }}
-                />
-            </div>
+            {!file && (<>
+                <RequiredInput labelFor={name} required={required}>{title}</RequiredInput>
+                <div
+                    onDragOver={(e) => {
+                        e.preventDefault();
+                        setFileEnter(true);
+                    }}
+                    onDragLeave={(e) => {
+                        e.preventDefault();
+                        setFileEnter(false);
+                    }}
+                    onDragEnd={(e) => {
+                        e.preventDefault();
+                        setFileEnter(false);
+                    }}
+                    onDrop={handleDrop}
+                    className="fileUpload"
+                    style={{ borderColor: fileEnter && 'var(--accent-hover)' }}
+                >
+                    <AiOutlineCloudUpload color="var(--accent)" size={"4rem"} />
+                    <p className="fileUploadText">Drop your file into the box or {" "}
+                        <span className="fileBrowse" onClick={openFileExplorer}>browse</span>
+                    </p>
+                    <input ref={inputRef} type="file" name={name} id={name} accept="image/*"
+                        required={required} onChange={handleFileChange} style={{ display: "none" }}
+                    />
+                </div>
+            </>)}
             {file && file !== '' && (
                 <MediaPreview file={file} fileUrl={fileUrl} handleClick={() => { setFile(''); setFileUrl(null); inputRef.current.value = ''; }}></MediaPreview>
             )}

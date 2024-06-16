@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import path from "path";
 import { useEffect, useRef, useState } from "react";
-import MediaUploadForNew from "./MediaUploadForNew";
-import ProductEssentialsForNew from "./ProductEssentialsForNew";
+import MediaUpload from "./MediaUpload";
+import ProductEssentials from "./ProductEssentials";
 
 export default function ProductForm({ product, mediaFiles }) {
 
@@ -106,12 +106,8 @@ export default function ProductForm({ product, mediaFiles }) {
         }
     }
 
-    async function handleSubmit(e) {
-
-        e.preventDefault();
+    function validateForms() {
         let allValid = true;
-
-        // Validate each form
         for (const formRef of formRefs) {
             const form = formRef.current;
             if (form) {
@@ -139,8 +135,10 @@ export default function ProductForm({ product, mediaFiles }) {
                 });
             }
         }
+        return allValid;
+    }
 
-        // send form data to the server action
+    function formatFormData() {
         const formData = new FormData();
         Object.entries(productData).forEach(([key, value]) => {
 
@@ -161,13 +159,27 @@ export default function ProductForm({ product, mediaFiles }) {
                 formData.append(key, value);
             }
         });
+        return formData;
+    }
 
-        const { message, redirectPath } = product ? await updateProduct(product, formData) : await createProduct(formData);
-        setPending(false);
-        setMessage(message);
-        if (redirectPath) {
-            router.push(redirectPath);
-            router.refresh();
+    async function handleSubmit(e) {
+
+        e.preventDefault();
+
+        // Validate each form
+        const formValid = validateForms();
+
+        if (formValid) {
+            // send form data to the server action
+            const formData = formatFormData();
+
+            const { message, redirectPath } = product ? await updateProduct(product, formData) : await createProduct(formData);
+            setPending(false);
+            setMessage(message);
+            if (redirectPath) {
+                router.push(redirectPath);
+                router.refresh();
+            }
         }
 
     }
@@ -177,12 +189,12 @@ export default function ProductForm({ product, mediaFiles }) {
 
             {product
                 ? !pending && <>
-                    <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
-                    <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+                    <ProductEssentials formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+                    <MediaUpload formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
                 </>
                 : <>
-                    <ProductEssentialsForNew formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
-                    <MediaUploadForNew formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
+                    <ProductEssentials formRef={formRefs[0]} productData={productData} handleChange={handleChange} setProductData={setProductData} />
+                    <MediaUpload formRef={formRefs[1]} files={productData.mediaFiles} setProductData={setProductData} />
                 </>
             }
 

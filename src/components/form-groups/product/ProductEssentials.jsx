@@ -6,7 +6,7 @@ import SingleUpload from "../input-helper/SingleUpload";
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
-export default function ProductEssentialsForNew({ formRef, productData, handleChange, setProductData }) {
+export default function ProductEssentials({ formRef, productData, handleChange, setProductData }) {
 
     // fetch categories with no children for user to choose as parent category
     const { data, error } = useSWR('/api/category/get-category/get-no-children', fetcher);
