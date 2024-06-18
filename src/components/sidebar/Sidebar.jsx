@@ -20,6 +20,7 @@ export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(!isSmallScreen);
     const pathname = usePathname();
 
+    // close the sidebar for smaller screens
     useEffect(() => {
         if (isSmallScreen) {
             setIsOpen(false);
@@ -28,12 +29,14 @@ export default function Sidebar() {
         }
     }, [isSmallScreen]);
 
+    // close the sidebar when going to another page for smaller screen
     useEffect(() => {
         if (isSmallScreen) {
             setIsOpen(false);
         }
     }, [pathname]);
 
+    // change the value of the global variable during open/close
     useEffect(() => {
         if (isOpen) {
             document.documentElement.style.setProperty('--sidebar-width', 'var(--o-sidebar-width)');
@@ -42,6 +45,7 @@ export default function Sidebar() {
         }
     }, [isOpen]);
 
+    // animate the openning and closing
     const sidebarAnimation = {
         open: {
             x: 0,

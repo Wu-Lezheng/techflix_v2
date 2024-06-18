@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
+// no longer used
 export async function POST(req) {
 
     let res = { message: null, targetUrl: null };

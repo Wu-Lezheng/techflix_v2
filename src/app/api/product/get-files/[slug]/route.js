@@ -1,4 +1,4 @@
-
+// no lounger used
 export async function GET(req, { params }) {
 
     const slug = params.slug;

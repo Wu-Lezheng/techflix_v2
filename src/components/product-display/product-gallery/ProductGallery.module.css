@@ -41,7 +41,7 @@
 }
 
 .navButton:hover {
-    /* TODO: may make this a variable */
+    /* TODO: maybe make this a variable */
     background-color: rgba(74, 74, 74, 0.6);
 }
 

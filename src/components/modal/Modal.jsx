@@ -4,7 +4,6 @@ import styles from "./Modal.module.css";
 
 export default function Modal({ children }) {
 
-    // TODO: handle scrolling prevention better
     useEffect(() => {
         // Save the current scroll position
         const scrollPosition = window.scrollY;

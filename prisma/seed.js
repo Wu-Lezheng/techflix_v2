@@ -90,6 +90,7 @@ async function main() {
         {
             productName: 'Drone Surveillance',
             productSummary: 'Our drone surveillance software is a cutting-edge solution designed to enhance aerial monitoring and surveillance capabilities for various applications. Leveraging advanced technologies, it provides real-time intelligence gathering, threat detection, and situational awareness in dynamic environments. With its user-friendly interface and customizable features, our software empowers users to efficiently manage drone fleets and analyze surveillance data for actionable insights.',
+            numberOfViews: 11253,
             coverImage: '/cover-images/drone_surveillance.jpg',
             categoryId: surveillanceCategory.id,
         },

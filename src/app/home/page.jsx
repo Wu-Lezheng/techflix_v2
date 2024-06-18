@@ -3,9 +3,11 @@ import RecentlyViewed from "@/components/recently-viewed/RecentlyViewed";
 import { getUserId } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 
-async function getAllProducts() {
+async function getProductsMostViewed() {
 
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+        orderBy: { numberOfViews: 'desc' },
+    });
     return products;
 }
 
@@ -36,7 +38,7 @@ async function getRecentlyViewed(userId) {
 
 export default async function Home() {
 
-    const products = await getAllProducts();
+    const products = await getProductsMostViewed();
     const userId = await getUserId();
     const recentlyViewed = await getRecentlyViewed(userId);
 

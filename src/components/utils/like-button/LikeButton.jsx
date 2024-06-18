@@ -28,7 +28,7 @@ export default function LikeButton({ productId, className, size }) {
         }
 
         if (res) {
-            mutate((key) => typeof key === 'string' && key.startsWith('/api/product/get-liked'));
+            mutate(`/api/product/get-liked/${productId}`);
             router.refresh();
         }
 
