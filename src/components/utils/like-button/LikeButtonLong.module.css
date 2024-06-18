@@ -1,0 +1,8 @@
+.likeButton {
+    width: 100%;
+    font: inherit;
+}
+
+.likeButtonActive {
+    color: var(--secondary);
+}

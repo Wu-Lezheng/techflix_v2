@@ -2,6 +2,7 @@ import MediaSlider from "@/components/media-slider/MediaSlider";
 import EditProductModal from "@/components/modal/edit-product-modal/EditProductModal";
 import ProductFeature from "@/components/product-feature/ProductFeature";
 import ProductSpecs from "@/components/product-specs/ProductSpecs";
+import LikeButtonLong from "@/components/utils/like-button/LikeButtonLong";
 import { isAdmin } from "@/lib/helper/userHelper";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -78,12 +79,14 @@ export default async function ProductPage({ params }) {
 
             <div className={styles.productLayout}>
                 <div className={styles.productControl}>
-                    <button>Add to favourites</button>
-                    {await isAdmin() && (
-                        <Link href="?edit-product=true">
-                            <button style={{ width: '100%' }}>Edit</button>
-                        </Link>
-                    )}
+                    <div style={{ display: 'flex', flexDirection: 'column', rowGap: '1.125rem', fontSize: '0.875rem', fontWeight: 'var(--semi-bold)' }}>
+                        <LikeButtonLong productId={product.id} />
+                        {await isAdmin() && (
+                            <Link href="?edit-product=true">
+                                <button style={{ width: '100%', font: 'inherit' }}>Edit</button>
+                            </Link>
+                        )}
+                    </div>
                     <div style={{ display: 'flex', flexDirection: 'row', columnGap: '0.5rem' }}>
                         <h4>Tags:</h4>
                         <div className={styles.tags}>
