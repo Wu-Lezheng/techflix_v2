@@ -50,7 +50,7 @@ export const authOptions = {
         })
     ],
     pages: {
-        signIn: "/signIn",
+        signIn: "/login",
     },
     callbacks: {
         session: ({ session, token }) => {

@@ -2,6 +2,7 @@
 import { useMediaQuery } from "@/lib/helper/mediaQuery";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AiFillHeart, AiFillHome, AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
@@ -82,10 +83,10 @@ export default function Sidebar() {
                 className={styles.sidebar}
             >
                 <div className={styles.header}>
-                    <div className={styles.logoSection}>
+                    <Link href="/" className={styles.logoSection}>
                         <Image src='/logo.png' alt="Logo" width={1920} height={1080} priority className={styles.logo}></Image>
                         <h2>TECHFLIX</h2>
-                    </div>
+                    </Link>
                     <div className={styles.collapseButton} onClick={() => setIsOpen(false)}>
                         <AiOutlineClose />
                     </div>

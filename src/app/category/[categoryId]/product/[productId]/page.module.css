@@ -32,7 +32,7 @@
 .productControl {
     flex: 1;
     height: fit-content;
-    padding: 1rem 1rem;
+    padding: 1.5rem 1rem;
     border: none;
     border-radius: 0.625rem;
     background-color: var(--bg-t);
