@@ -258,6 +258,33 @@ async function main() {
     const productSpecs = await Promise.all(
         specs.map(spec => prisma.specification.create({ data: spec }))
     );
+
+    // create product tags
+    const tags = [
+        { tagName: 'SCDF' },
+        { tagName: 'Singapore' },
+        { tagName: 'Drone' },
+        { tagName: 'Remote' },
+    ];
+    const productAssociations = {
+        [droneSurveillance.id]: [0, 1, 2, 3], // All tags
+        [agileOps.id]: [0, 1], // Only the first tag
+    };
+
+    const productTags = await prisma.$transaction(
+        tags.map((tag, index) => {
+            return prisma.tag.create({
+                data: {
+                    tagName: tag.tagName,
+                    products: {
+                        create: Object.entries(productAssociations)
+                            .filter(([_, tagIndices]) => tagIndices.includes(index))
+                            .map(([productId]) => ({ productId })),
+                    },
+                },
+            });
+        })
+    );
 }
 
 main()

@@ -15,6 +15,18 @@ async function searchProductsPartial(text) {
     return products;
 }
 
+async function searchProductsWithTag(text) {
+    const products = await prisma.product.findMany({
+        where: {
+            tags: {
+                some: { tag: { tagName: { equals: text, mode: 'insensitive' }, }, },
+            },
+        },
+    });
+
+    return products;
+}
+
 async function searchCategoriesPartial(text) {
     const categories = await prisma.category.findMany({
         where: {
@@ -39,6 +51,7 @@ export default async function SearchResultsPage({ searchParams }) {
     }
 
     const productsMatched = await searchProductsPartial(query);
+    const productsWithTag = await searchProductsWithTag(query);
     const categoriesMatched = await searchCategoriesPartial(query);
 
     return (
@@ -48,26 +61,40 @@ export default async function SearchResultsPage({ searchParams }) {
 
             <div style={{ marginTop: '1.5rem' }}>
                 <h2>Products that match</h2>
-                <div className={styles.grid}>
-                    {Array.isArray(productsMatched) && productsMatched.length > 0
-                        ? productsMatched.map(product => (
+                {Array.isArray(productsMatched) && productsMatched.length > 0
+                    ? <div className={styles.grid}>
+                        {productsMatched.map(product => (
                             <ProductCardBg key={product.id} product={product}></ProductCardBg>
-                        ))
-                        : <p>No products match your search</p>
-                    }
-                </div>
+                        ))}
+                    </div>
+                    // TODO: handle the not-found better, also for the rest below
+                    : <p style={{ marginTop: '1rem' }}>No products match your search</p>
+                }
+
+            </div>
+
+            <div style={{ marginTop: '1.5rem' }}>
+                <h2>Products with tag "{query}"</h2>
+                {Array.isArray(productsWithTag) && productsWithTag.length > 0
+                    ? <div className={styles.grid}>
+                        {productsWithTag.map(product => (
+                            <ProductCardBg key={product.id} product={product}></ProductCardBg>
+                        ))}
+                    </div>
+                    : <p style={{ marginTop: '1rem' }}>No products have the tag or the tag doesn't exist</p>
+                }
             </div>
 
             <div style={{ marginTop: '1.5rem' }}>
                 <h2>Categories that match</h2>
-                <div className={styles.grid}>
-                    {Array.isArray(categoriesMatched) && categoriesMatched.length > 0
-                        ? categoriesMatched.map(category => (
+                {Array.isArray(categoriesMatched) && categoriesMatched.length > 0
+                    ? <div className={styles.grid}>
+                        {categoriesMatched.map(category => (
                             <CategoryDisplay key={category.id} category={category}></CategoryDisplay>
-                        ))
-                        : <p>No categories match your search</p>
-                    }
-                </div>
+                        ))}
+                    </div>
+                    : <p style={{ marginTop: '1rem' }}>No categories match your search</p>
+                }
             </div>
 
         </div>

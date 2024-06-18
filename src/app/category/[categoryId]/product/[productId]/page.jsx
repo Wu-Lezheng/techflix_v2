@@ -23,6 +23,18 @@ async function getCategoryName(categoryId) {
     return category;
 }
 
+async function getTags(productId) {
+    const tags = await prisma.tag.findMany({
+        where: {
+            products: {
+                some: { productId: productId, },
+            },
+        },
+    })
+
+    return tags;
+}
+
 async function getFeatures(productId) {
     const features = await prisma.feature.findMany({
         where: { productId: productId },
@@ -55,6 +67,7 @@ export default async function ProductPage({ params }) {
 
     const mediaFiles = await getMediaFiles(product.id);
     const category = await getCategoryName(product.categoryId);
+    const tags = await getTags(product.id);
     const features = await getFeatures(product.id);
     const specs = await getSpecs(product.id);
 
@@ -71,8 +84,15 @@ export default async function ProductPage({ params }) {
                             <button style={{ width: '100%' }}>Edit</button>
                         </Link>
                     )}
-                    <h4>Tags:</h4>
-                    <h4>{`Views: ${product.numberOfViews}`}</h4>
+                    <div style={{ display: 'flex', flexDirection: 'row', columnGap: '0.5rem' }}>
+                        <h4>Tags:</h4>
+                        <div className={styles.tags}>
+                            {tags.map((tag, index) => (
+                                <p key={index} className={styles.tag}>{tag.tagName}</p>
+                            ))}
+                        </div>
+                    </div>
+                    <h4>Views: <span style={{ fontWeight: 'var(--medium)', fontSize: '0.875rem' }}>{product.numberOfViews}</span></h4>
                 </div>
                 <div className={styles.productDetails}>
                     {
