@@ -102,10 +102,10 @@ async function main() {
             categoryId: ersCategory.id,
         },
         {
-            productName: 'Agile Ops',
-            productSummary: 'Agile Ops is a comprehensive platform designed to streamline reporting and deployment processes, ensuring efficient resource management and rapid response to emergency incidents. With its intuitive interface and powerful features, our software empowers SCDF personnel to effectively coordinate operations, generate insightful reports, and deploy resources with precision and speed.',
+            productName: 'Agile Response',
+            productSummary: 'Agile Response is a comprehensive platform designed to streamline reporting and deployment processes, ensuring efficient resource management and rapid response to emergency incidents. With its intuitive interface and powerful features, our software empowers SCDF personnel to effectively coordinate operations, generate insightful reports, and deploy resources with precision and speed.',
             numberOfViews: 9375,
-            coverImage: '/cover-images/agile_ops.jpg',
+            coverImage: '/cover-images/agile_res.png',
             categoryId: ersCategory.id,
         },
         {
@@ -123,7 +123,7 @@ async function main() {
 
     // create recently viewed
     const droneSurveillance = createdProducts.find(product => product.productName === 'Drone Surveillance');
-    const agileOps = createdProducts.find(product => product.productName === 'Agile Ops');
+    const agileResponse = createdProducts.find(product => product.productName === 'Agile Response');
     const firefighterERS = createdProducts.find(product => product.productName === 'Firefighter ERS');
 
     const viewedProducts = [
@@ -133,7 +133,7 @@ async function main() {
         },
         {
             userId: alice.id,
-            productId: agileOps.id,
+            productId: agileResponse.id,
         },
         {
             userId: alice.id,
@@ -188,6 +188,27 @@ async function main() {
             filePath: '/videos/drone_6.mp4',
             mediaType: MediaType.VIDEO,
             productId: droneSurveillance.id,
+        },
+        {
+            id: 'agile_1',
+            fileName: 'agile_1.jpg',
+            filePath: '/images/agile_1.jpg',
+            mediaType: MediaType.IMAGE,
+            productId: agileResponse.id,
+        },
+        {
+            id: 'agile_2',
+            fileName: 'agile_2.jpg',
+            filePath: '/images/agile_2.jpg',
+            mediaType: MediaType.IMAGE,
+            productId: agileResponse.id,
+        },
+        {
+            id: 'agile_3',
+            fileName: 'agile_3.mp4',
+            filePath: '/videos/agile_3.mp4',
+            mediaType: MediaType.VIDEO,
+            productId: agileResponse.id,
         },
     ];
 
@@ -268,7 +289,7 @@ async function main() {
     ];
     const productAssociations = {
         [droneSurveillance.id]: [0, 1, 2, 3], // All tags
-        [agileOps.id]: [0, 1], // Only the first tag
+        [agileResponse.id]: [0, 1], // Only the first tag
     };
 
     const productTags = await prisma.$transaction(

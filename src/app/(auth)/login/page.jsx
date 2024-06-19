@@ -30,7 +30,7 @@ export default function LoginPage(props) {
             router.push(callbackUrl ? callbackUrl : "/home");
             router.refresh();
         } else {
-            setMessage('Authentication failed. Check if you are using the correct email and if the password matches the provided email.');
+            setMessage('Authentication failed. Check if you are using the correct email and the password matches the email.');
         }
     }
 

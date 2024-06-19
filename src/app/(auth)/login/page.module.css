@@ -14,13 +14,6 @@
     box-shadow: inset 0 0 10rem 5rem var(--bg);
 }
 
-@media screen and (max-width: 1024px) {
-    .loginBg {
-        padding: 3rem 0;
-        justify-content: center;
-    }
-}
-
 .loginForm {
     position: relative;
     z-index: 2;
@@ -36,8 +29,20 @@
     font-weight: var(--semi-bold);
 
     min-width: calc(var(--mobile-screen) - 2rem);
+    width: 50%;
     max-width: calc(var(--medium-screen) - 2rem);
 
+}
+
+@media screen and (max-width: 1024px) {
+    .loginBg {
+        padding: 3rem 0;
+        justify-content: center;
+    }
+
+    .loginForm {
+        width: 80%;
+    }
 }
 
 .passwordContainer {

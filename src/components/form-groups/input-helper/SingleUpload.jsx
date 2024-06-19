@@ -81,7 +81,7 @@ export default function SingleUpload({ required, title, name, file, setProductDa
                     }}
                     onDrop={handleDrop}
                     className="fileUpload"
-                    style={{ borderColor: fileEnter && 'var(--accent-hover)' }}
+                    style={{ boxShadow: fileEnter ? 'inset 0 0 1.5rem 0.5rem var(--accent-hover)' : 'none' }}
                 >
                     <AiOutlineCloudUpload color="var(--accent)" size={"4rem"} />
                     <p className="fileUploadText">Drop your file into the box or {" "}
@@ -92,9 +92,10 @@ export default function SingleUpload({ required, title, name, file, setProductDa
                     />
                 </div>
             </>)}
-            {file && file !== '' && (
-                <MediaPreview file={file} fileUrl={fileUrl} handleClick={() => { setFile(''); setFileUrl(null); inputRef.current.value = ''; }}></MediaPreview>
-            )}
+            {file && file !== '' && (<>
+                <p>Cover Image <span style={{ color: 'red' }}>*</span></p>
+                <MediaPreview file={file} fileUrl={fileUrl} handleClick={() => { setFile(''); setFileUrl(null); }}></MediaPreview>
+            </>)}
         </div>
     );
 }

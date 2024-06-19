@@ -82,7 +82,7 @@ export default function MultipleUploads({ required, title, name, files, setProdu
                     }}
                     onDrop={handleDrop}
                     className="fileUpload"
-                    style={{ width: '100%', flex: '1' }}
+                    style={{ width: '100%', flex: '1', boxShadow: fileEnter ? 'inset 0 0 1.5rem 0.5rem var(--accent-hover)' : 'none' }}
                 >
                     <AiOutlineCloudUpload color="var(--accent)" size={"4rem"} />
                     <p className="fileUploadText">Drop your file into the box or {" "}
